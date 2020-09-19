@@ -1,6 +1,21 @@
 export default {
     items: [
         {
+            id: 'external',
+            title: 'External',
+            type: 'group',
+            icon: 'icon-navigation',
+            children: [
+                {
+                    id: 'loans',
+                    title: 'Loans',
+                    type: 'item',
+                    url: '/loans',
+                    icon: 'feather icon-home',
+                }
+            ]
+        },
+        {
             id: 'navigation',
             title: 'Navigation',
             type: 'group',
