@@ -1,118 +1,102 @@
 import React from "react";
-import { Card, Table, Button } from "react-bootstrap";
+import { connect } from "react-redux";
+import { FETCH_LOAN, SAVE_LOAN, UPDATE_LOAN } from "../../store/actions";
 import moment from "moment";
 import LoansForm from "./LoansForm";
+import LoansTable from "./LoansTable";
+import { Card } from "react-bootstrap";
+import Fees from "./fees";
 const Action = {
   EDIT: "E",
   CREATE: "C",
   INITIAL: "I",
+  FEE: "F",
 };
 
 class Loans extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.handleAdd = this.handleAdd.bind(this);
     this.handleSave = this.handleSave.bind(this);
+    this.handleShow = this.handleShow.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
-    const records = [
-      {
-        code: this.randomNumber(),
-        debtor: "Debtor 3",
-        createdAt: moment().format(),
-      },
-      {
-        code: this.randomNumber(),
-        debtor: "Debtor 4",
-        createdAt: moment().format(),
-      },
-    ];
+    this.handleBack = this.handleBack.bind(this);
     this.state = {
-      records,
       action: Action.INITIAL,
       loan: null,
     };
   }
+  
+  componentDidMount() {
+    this.props.fetch()
+  }
 
-  randomNumber() {
-    return `20200000000${Math.floor(Math.random() * 10)}`;
+  handleSave(record) {
+    const { action } = this.state;
+    switch (action) {
+      case Action.CREATE:
+        record.id = 2
+        this.props.save(record)
+        break;
+      case Action.EDIT:
+        this.props.save(record)
+        break;
+      default:
+        break;
+    }
+    this.setState({ action: Action.INITIAL });
+  }
+
+  handleShow(record) {
+    this.setState({ action: Action.FEE, loan: record });
+  }
+
+  handleEdit(record) {
+    this.setState({ action: Action.EDIT, loan: record });
   }
 
   handleAdd() {
-    this.setState({
-      action: Action.CREATE,
-    });
-    const { records } = this.state;
-    records.push({
-      code: this.randomNumber(),
-      debtor: "Debtor 3",
-      createdAt: moment().format(),
-    });
-    this.setState({ records });
+    this.setState({ action: Action.CREATE });
   }
 
-  handleSave(loan) {
-    const { records } = this.state;
-    const recordsCopy = [...records]
-    recordsCopy.push({
-      ...loan,
-      code: this.randomNumber(),
-      createdAt: moment().format(),
-    });
-    this.setState({ records: recordsCopy, action: Action.INITIAL})
+  handleBack() {
+    this.setState({ action: Action.INITIAL });
   }
-
-  handleEdit() {}
 
   render() {
-    const { action } = this.state;
+    const { action, loan } = this.state;
+    const { loans } = this.props;
     return (
-      <>
-        {action === Action.INITIAL && (
-          <Card>
-            <Card.Header>
-              <Card.Title as="h5">Filter</Card.Title>
-              <Button variant="success" size="md" onClick={this.handleAdd}>
-                Add
-              </Button>
-            </Card.Header>
-            <Card.Body>
-              <Table responsive hover size="md">
-                <thead>
-                  <tr>
-                    <th>Code</th>
-                    <th>Name</th>
-                    <th>Created at</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.state.records.map((record, index) => (
-                    <tr key={index}>
-                      <td>{record.code}</td>
-                      <td>{record.debtor}</td>
-                      <td>{record.createdAt}</td>
-                      <td>
-                        <Button
-                          variant="primary"
-                          size="sm"
-                          onClick={this.handleEdit}
-                        >
-                          Edit
-                        </Button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
-            </Card.Body>
-          </Card>
-        )}
-        {[Action.CREATE, Action.EDIT].includes(action) && (
-          <LoansForm onSave={this.handleSave} />
-        )}
-      </>
+      <Card>
+        <Card.Body>
+          {action === Action.INITIAL && (
+            <LoansTable
+              records={loans}
+              onShow={this.handleShow}
+              onEdit={this.handleEdit}
+              onAdd={this.handleAdd}
+            />
+          )}
+          {[Action.CREATE, Action.EDIT].includes(action) && (
+            <LoansForm loan={loan} onSave={this.handleSave} />
+          )}
+          {action === Action.FEE && (
+            <Fees loan={loan} onBack={this.handleBack} />
+          )}
+        </Card.Body>
+      </Card>
     );
   }
 }
 
-export default Loans;
+const maptStateToProps = (state) => ({
+  loans: state.loans,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  fetch: () => dispatch({ type: FETCH_LOAN}),
+  save: (loan) => dispatch({ type: SAVE_LOAN, payload: loan}),
+  update: (loan) => dispatch({ type: UPDATE_LOAN, payload: loan}),
+});
+
+export default connect(maptStateToProps, mapDispatchToProps)(Loans);
