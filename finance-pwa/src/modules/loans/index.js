@@ -26,20 +26,20 @@ class Loans extends React.Component {
       loan: null,
     };
   }
-  
+
   componentDidMount() {
-    this.props.fetch()
+    this.props.fetch();
   }
 
   handleSave(record) {
     const { action } = this.state;
     switch (action) {
       case Action.CREATE:
-        record.id = 2
-        this.props.save(record)
+        record.id = 2;
+        this.props.save(record);
         break;
       case Action.EDIT:
-        this.props.save(record)
+        this.props.save(record);
         break;
       default:
         break;
