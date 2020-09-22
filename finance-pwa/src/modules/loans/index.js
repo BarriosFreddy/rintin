@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import { FETCH_LOAN, SAVE_LOAN, UPDATE_LOAN } from "../../store/actions";
-import moment from "moment";
 import LoansForm from "./LoansForm";
 import LoansTable from "./LoansTable";
 import { Card } from "react-bootstrap";

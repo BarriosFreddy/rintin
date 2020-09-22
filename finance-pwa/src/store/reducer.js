@@ -85,38 +85,18 @@ const reducer = (state = initialState, action) => {
         layout: action.layout,
       };
     case actionTypes.FETCH_LOAN:
-      console.log("fetching data ...");
       return {
         ...state,
-        loans: [
-          {
-            id: 1,
-            code: 7,
-            debtor: "Debtor 3",
-            amount: 1000000,
-            percentage: 10,
-            fee: 250000,
-            comments: "Comments, Comments, Comments,Comments",
-            createdAt: "2020-09-01",
-          },
-        ],
+        fetching: true,
       };
     case actionTypes.SAVE_LOAN:
-      const loans = [...state.loans]
-      loans.push(action.payload);
       return {
         ...state,
-        loans,
+
       };
     case actionTypes.UPDATE_LOAN:
-      const loansState = [...state.loans];
-      const index = loansState.findIndex((item) => item.id === action.payload.id);
-      if (index >= 0) {
-        loansState.splice(index, 1, action.payload);
-      }
       return {
         ...state,
-        loans: loansState
       };
     default:
       return state;
