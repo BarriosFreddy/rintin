@@ -27,7 +27,7 @@ class LoansForm extends React.Component {
 
   render() {
     const {
-      loan: { debtor, amount, percentage, fee, comments },
+      loan: { debtor, amount, percentage, feeDefault, comments },
     } = this.state;
     return (
       <Form>
@@ -65,7 +65,7 @@ class LoansForm extends React.Component {
           <Form.Label>Default fee</Form.Label>
           <Form.Control
             name="fee"
-            value={fee}
+            value={feeDefault}
             type="number"
             placeholder="0.00"
             onChange={this.handleChange}

@@ -26,10 +26,10 @@ const loansCreateSchema = joi.object().keys({
   percentage: percentageSchema.required(),
   feeDefault: feeDefaultSchema,
   comments: commentsSchema.optional(),
-  active: activeSchema.required(),
+  active: activeSchema,
   fees: joi.array().items(feeSchema),
   createdAt: createdAtSchema.required(),
-  updatedAt: updatedAtSchema,
+  updatedAt: updatedAtSchema.optional(),
 });
 
 const loansUpdateSchema = joi.object().keys({

@@ -4,6 +4,7 @@ require("dotenv").config();
 require("./libs/mongodbLib").connect();
 const routes = require("./routes");
 const helmet = require("helmet");
+const cors = require('cors');
 const swagger = require("./libs/swagger");
 
 
@@ -14,6 +15,7 @@ const { PORT } = process.env;
 
 app.use(express.json())
 app.use(helmet())
+app.use(cors())
 routes(app);
 swagger(app);
 

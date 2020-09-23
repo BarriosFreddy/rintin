@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { FETCH_LOAN, SAVE_LOAN, UPDATE_LOAN } from "../../store/actions";
+import { getLoan, saveLoan } from "../../store/actions";
 import LoansForm from "./LoansForm";
 import LoansTable from "./LoansTable";
 import { Card } from "react-bootstrap";
@@ -30,11 +30,18 @@ class Loans extends React.Component {
     this.props.fetch();
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    const { loans } = this.props;
+    console.log({ prevProps });
+    console.log({ loans });
+  }
+
   handleSave(record) {
     const { action } = this.state;
     switch (action) {
       case Action.CREATE:
-        record.id = 2;
+        record.createdAt = new Date().getTime()
+        console.log({record});
         this.props.save(record);
         break;
       case Action.EDIT:
@@ -65,6 +72,7 @@ class Loans extends React.Component {
   render() {
     const { action, loan } = this.state;
     const { loans } = this.props;
+    console.log(loans);
     return (
       <Card>
         <Card.Body>
@@ -93,9 +101,8 @@ const maptStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetch: () => dispatch({ type: FETCH_LOAN}),
-  save: (loan) => dispatch({ type: SAVE_LOAN, payload: loan}),
-  update: (loan) => dispatch({ type: UPDATE_LOAN, payload: loan}),
+  fetch: () => dispatch(getLoan()),
+  save: (loan) => dispatch(saveLoan(loan)),
 });
 
 export default connect(maptStateToProps, mapDispatchToProps)(Loans);

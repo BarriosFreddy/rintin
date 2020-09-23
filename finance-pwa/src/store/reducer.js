@@ -84,19 +84,10 @@ const reducer = (state = initialState, action) => {
         ...state,
         layout: action.layout,
       };
-    case actionTypes.FETCH_LOAN:
+    case actionTypes.TYPE:
       return {
         ...state,
-        fetching: true,
-      };
-    case actionTypes.SAVE_LOAN:
-      return {
-        ...state,
-
-      };
-    case actionTypes.UPDATE_LOAN:
-      return {
-        ...state,
+        ...action.payload
       };
     default:
       return state;

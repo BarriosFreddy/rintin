@@ -10,6 +10,8 @@ class LoansService {
    * @param {Object} loan
    */
   save(loan) {
+    loan.active = true;
+    loan.createdAt = new Date().getTime();
     return mongodbLib.save(COLLECTION, loan);
   }
 

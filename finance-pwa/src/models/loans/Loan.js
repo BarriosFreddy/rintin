@@ -3,10 +3,10 @@ class Loan {
     this.debtor = '';
     this.amount = 0.00;
     this.percentage = 0.00;
-    this.fee = 0.00;
+    this.feeDefault = 0.00;
     this.comments = '';
-    this.createdAt = null;
-    this.updatedAt = null;
+    this.createdAt = undefined;
+    this.updatedAt = undefined;
   }
 }
 
