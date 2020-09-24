@@ -2,7 +2,7 @@ import axios from "axios";
 
 
 const TOKEN =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZjVkYTM3MWE0ODljOTUyMDU3ZGFmY2MiLCJpYXQiOjE2MDA4Mjk1MzUsImV4cCI6MTYwMDgzMzEzNX0.es3NLfatgbyIdfhCVHFnQPD0bFS1_dninrNqnbOo4Pk";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZjVkYTM3MWE0ODljOTUyMDU3ZGFmY2MiLCJpYXQiOjE2MDA5MTQ0NzYsImV4cCI6MTYwMDkxODA3Nn0.SZFnwbgYAc7esoyGC7SqUpEDQWeY0k7tuluBe3g1cak";
 
 
 const axiosInstance = axios.create({

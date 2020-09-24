@@ -17,18 +17,8 @@ class Fees extends React.Component {
     this.handleSave = this.handleSave.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
     this.handleBack = this.handleBack.bind(this);
-    const records = [
-      {
-        code: this.randomNumber(),
-        debtor: "Debtor 3",
-        amount: 250000,
-        createdAt: moment().format(),
-      },
-    ];
     this.state = {
-      records,
       action: Action.INITIAL,
-      loan: null,
       fee: null,
     };
   }
@@ -73,7 +63,10 @@ class Fees extends React.Component {
   }
 
   render() {
-    const { action, records, fee } = this.state;
+    const { action, fee } = this.state;
+    const {
+      loan: { fees = [] },
+    } = this.props;
     return (
       <>
         <Card>
@@ -86,7 +79,7 @@ class Fees extends React.Component {
           <Card.Body>
             {action === Action.INITIAL && (
               <FeesTable
-                records={records}
+                records={fees}
                 onShow={this.handleShow}
                 onEdit={this.handleEdit}
                 onAdd={this.handleAdd}

@@ -6,7 +6,13 @@ const initialState = {
   isTrigger: [], //for active default menu, set blank for horizontal
   ...config,
   isFullScreen: false, // static can't change
-  loans: [],
+  loans: {
+    fetching: false,
+    saving: false,
+    updating: false,
+    loans: [],
+    loan: null
+  }
 };
 
 const reducer = (state = initialState, action) => {
@@ -84,10 +90,13 @@ const reducer = (state = initialState, action) => {
         ...state,
         layout: action.layout,
       };
-    case actionTypes.TYPE:
+    case actionTypes.LOAN_TYPE:
       return {
         ...state,
-        ...action.payload
+        loans: {
+          ...state.loans,
+          ...action.payload
+        }
       };
     default:
       return state;

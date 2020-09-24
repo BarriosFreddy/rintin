@@ -14,7 +14,23 @@ class LoansForm extends React.Component {
   }
 
   handleSave() {
-    this.props.onSave(this.state.loan);
+    if (this.validateForm()) {
+      this.props.onSave(this.state.loan);
+    }
+  }
+
+  validateForm() {
+    const {
+      loan: { debtor, amount, percentage, feeDefault },
+    } = this.state;
+    let isOk = true;
+
+    if (!debtor) isOk = false;
+    if (isOk && !amount) isOk = false;
+    if (isOk && (percentage === null || percentage === undefined)) isOk = false;
+    if (isOk && (feeDefault === null || feeDefault === undefined)) isOk = false;
+
+    return isOk;
   }
 
   handleChange(event) {
@@ -34,6 +50,7 @@ class LoansForm extends React.Component {
         <Form.Group controlId="debtor">
           <Form.Label>Debtor</Form.Label>
           <Form.Control
+            required
             name="debtor"
             value={debtor}
             type="text"
@@ -44,6 +61,7 @@ class LoansForm extends React.Component {
         <Form.Group controlId="amount">
           <Form.Label>Amount</Form.Label>
           <Form.Control
+            required
             name="amount"
             value={amount}
             type="number"
@@ -54,6 +72,7 @@ class LoansForm extends React.Component {
         <Form.Group controlId="percentage">
           <Form.Label>Percentage</Form.Label>
           <Form.Control
+            required
             name="percentage"
             value={percentage}
             type="number"
@@ -64,7 +83,8 @@ class LoansForm extends React.Component {
         <Form.Group controlId="fee">
           <Form.Label>Default fee</Form.Label>
           <Form.Control
-            name="fee"
+            required
+            name="feeDefault"
             value={feeDefault}
             type="number"
             placeholder="0.00"

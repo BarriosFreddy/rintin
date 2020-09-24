@@ -9,49 +9,77 @@ export const CHANGE_LAYOUT = "CHANGE_LAYOUT";
 export const NAV_CONTENT_LEAVE = "NAV_CONTENT_LEAVE";
 export const NAV_COLLAPSE_LEAVE = "NAV_COLLAPSE_LEAVE";
 
-export const FETCH_LOAN = "FETCH_LOAN";
+
+
+export const LOAN_TYPE = "LOAN_TYPE";
+
 export const FETCH_LOAN_START = "FETCH_LOAN_START";
 export const FETCH_LOAN_SUCCESS = "FETCH_LOAN_SUCCESS";
 export const FETCH_LOAN_FAILURE = "FETCH_LOAN_FAILURE";
-export const TYPE = "TYPE";
-export const SAVE_LOAN = "SAVE_LOAN";
+
 export const SAVE_LOAN_START = "SAVE_LOAN_START";
 export const SAVE_LOAN_SUCCESS = "SAVE_LOAN_SUCCESS";
 export const SAVE_LOAN_FAILURE = "SAVE_LOAN_FAILURE";
 
-export const getLoan = () => {
+export const UPDATE_LOAN_START = "UPDATE_LOAN_START";
+export const UPDATE_LOAN_SUCCESS = "UPDATE_LOAN_SUCCESS";
+export const UPDATE_LOAN_FAILURE = "UPDATE_LOAN_FAILURE";
+
+export const findAllLoan = () => {
   return async (dispatch) => {
     try {
-      dispatch(getLoanStart());
-      const response = await axios({
+      dispatch(findLoansStart());
+      const { data } = await axios({
         url: `${config.api.base}${config.api.loans.findAll}`,
         method: "GET",
       });
-      console.log({ response });
-      dispatch(getLoanSuccess(response.data));
+      dispatch(findAllLoansSuccess(data));
     } catch (error) {
-      dispatch(getLoanFailure(error));
+      dispatch(findLoansFailure(error));
     }
   };
 };
 
-export const getLoanStart = () => ({
-  type: FETCH_LOAN_START,
+export const findByIdLoan = (id) => {
+  return async (dispatch) => {
+    try {
+      dispatch(findLoansStart());
+      const { data } = await axios({
+        url: `${config.api.base}${config.api.loans.findById}${id}`,
+        method: "GET",
+      });
+      dispatch(findByIdLoanSuccess(data));
+    } catch (error) {
+      dispatch(findLoansFailure(error));
+    }
+  };
+};
+
+export const findLoansStart = () => ({
+  type: LOAN_TYPE,
   payload: {
     fetching: true,
   },
 });
 
-export const getLoanSuccess = (loans) => ({
-  type: FETCH_LOAN_SUCCESS,
+export const findAllLoansSuccess = (loans) => ({
+  type: LOAN_TYPE,
   payload: {
     fetching: false,
     loans,
   },
 });
 
-export const getLoanFailure = (error) => ({
-  type: FETCH_LOAN_FAILURE,
+export const findByIdLoanSuccess = (loan) => ({
+  type: LOAN_TYPE,
+  payload: {
+    fetching: false,
+    loan,
+  },
+});
+
+export const findLoansFailure = (error) => ({
+  type: LOAN_TYPE,
   payload: {
     fetching: false,
     error,
@@ -62,15 +90,14 @@ export const saveLoan = (loan) => {
   return async (dispatch) => {
     try {
       dispatch(saveLoanStart());
-      const response = await axios({
+      await axios({
         url: `${config.api.base}${config.api.loans.save}`,
         method: "post",
         data: {
           ...loan,
         },
       });
-      dispatch(saveLoanSuccess(response.data));
-      dispatch(getLoan());
+      dispatch(saveLoanSuccess());
     } catch (error) {
       dispatch(saveLoanFailure(error));
     }
@@ -78,24 +105,63 @@ export const saveLoan = (loan) => {
 };
 
 export const saveLoanStart = () => ({
-  type: TYPE,
+  type: LOAN_TYPE,
   payload: {
     saving: true,
   },
 });
 
 export const saveLoanSuccess = () => ({
-  type: TYPE,
+  type: LOAN_TYPE,
   payload: {
     saving: false,
   },
 });
 
 export const saveLoanFailure = (error) => ({
-  type: TYPE,
+  type: LOAN_TYPE,
   payload: {
     saving: false,
-    loans: [],
+    error,
+  },
+});
+
+export const updateLoan = (loan) => {
+  return async (dispatch) => {
+    try {
+      dispatch(updateLoanStart());
+      await axios({
+        url: `${config.api.base}${config.api.loans.save}`,
+        method: "post",
+        data: {
+          ...loan,
+        },
+      });
+      dispatch(saveLoanSuccess());
+    } catch (error) {
+      dispatch(saveLoanFailure(error));
+    }
+  };
+};
+
+export const updateLoanStart = () => ({
+  type: LOAN_TYPE,
+  payload: {
+    updating: true,
+  },
+});
+
+export const updateLoanSuccess = () => ({
+  type: LOAN_TYPE,
+  payload: {
+    updating: false,
+  },
+});
+
+export const updateLoanFailure = (error) => ({
+  type: LOAN_TYPE,
+  payload: {
+    updating: false,
     error,
   },
 });

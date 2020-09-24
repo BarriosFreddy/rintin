@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getLoan, saveLoan } from "../../store/actions";
+import { findAllLoan, saveLoan, updateLoan } from "../../store/actions";
 import LoansForm from "./LoansForm";
 import LoansTable from "./LoansTable";
 import { Card } from "react-bootstrap";
@@ -40,12 +40,13 @@ class Loans extends React.Component {
     const { action } = this.state;
     switch (action) {
       case Action.CREATE:
-        record.createdAt = new Date().getTime()
-        console.log({record});
+        record.createdAt = new Date().getTime();
+        console.log({ record });
         this.props.save(record);
         break;
       case Action.EDIT:
-        this.props.save(record);
+        record.updatedAt = new Date().getTime();
+        this.props.update(record);
         break;
       default:
         break;
@@ -96,13 +97,21 @@ class Loans extends React.Component {
   }
 }
 
-const maptStateToProps = (state) => ({
-  loans: state.loans,
-});
+const maptStateToProps = (state) => {
+  const { loan, loans, saving, updating, fetching } = state.loans;
+  return {
+    loan,
+    loans,
+    saving,
+    updating,
+    fetching,
+  };
+};
 
 const mapDispatchToProps = (dispatch) => ({
-  fetch: () => dispatch(getLoan()),
+  fetch: () => dispatch(findAllLoan()),
   save: (loan) => dispatch(saveLoan(loan)),
+  update: (loan) => dispatch(updateLoan(loan)),
 });
 
 export default connect(maptStateToProps, mapDispatchToProps)(Loans);

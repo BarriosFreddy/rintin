@@ -26,8 +26,8 @@ class LoansTable extends React.Component {
       <Table responsive hover size="md">
         <thead>
           <tr>
-            <th>Code</th>
             <th>Name</th>
+            <th>Amount</th>
             <th>Created at</th>
             <th></th>
           </tr>
@@ -35,8 +35,8 @@ class LoansTable extends React.Component {
         <tbody>
           {this.props.records.map((record, index) => (
             <tr key={index}>
-              <td>{record.code}</td>
               <td>{record.debtor}</td>
+              <td>{record.amount}</td>
               <td>{record.createdAt}</td>
               <td>
                 <Button
