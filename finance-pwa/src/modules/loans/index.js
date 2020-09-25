@@ -1,6 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
-import { findAllLoan, saveLoan, updateLoan } from "../../store/actions";
+import {
+  findAllLoan,
+  saveLoan,
+  updateLoan,
+  loanSelected,
+} from "../../store/actions";
 import LoansForm from "./LoansForm";
 import LoansTable from "./LoansTable";
 import { Card } from "react-bootstrap";
@@ -22,7 +27,6 @@ class Loans extends React.Component {
     this.handleBack = this.handleBack.bind(this);
     this.state = {
       action: Action.INITIAL,
-      loan: null,
     };
   }
 
@@ -31,9 +35,9 @@ class Loans extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { loans } = this.props;
-    console.log({ prevProps });
-    console.log({ loans });
+    if (!prevProps.saving && this.props.saving) {
+    } else if (!prevProps.fetching && this.props.fetching) {
+    }
   }
 
   handleSave(record) {
@@ -41,7 +45,6 @@ class Loans extends React.Component {
     switch (action) {
       case Action.CREATE:
         record.createdAt = new Date().getTime();
-        console.log({ record });
         this.props.save(record);
         break;
       case Action.EDIT:
@@ -55,11 +58,13 @@ class Loans extends React.Component {
   }
 
   handleShow(record) {
-    this.setState({ action: Action.FEE, loan: record });
+    this.props.loanSelected(record);
+    this.setState({ action: Action.FEE });
   }
 
   handleEdit(record) {
-    this.setState({ action: Action.EDIT, loan: record });
+    this.props.loanSelected(record);
+    this.setState({ action: Action.EDIT });
   }
 
   handleAdd() {
@@ -67,13 +72,13 @@ class Loans extends React.Component {
   }
 
   handleBack() {
+    this.props.fetch();
     this.setState({ action: Action.INITIAL });
   }
 
   render() {
-    const { action, loan } = this.state;
-    const { loans } = this.props;
-    console.log(loans);
+    const { action } = this.state;
+    const { loans, loan } = this.props;
     return (
       <Card>
         <Card.Body>
@@ -112,6 +117,7 @@ const mapDispatchToProps = (dispatch) => ({
   fetch: () => dispatch(findAllLoan()),
   save: (loan) => dispatch(saveLoan(loan)),
   update: (loan) => dispatch(updateLoan(loan)),
+  loanSelected: (loan) => dispatch(loanSelected(loan)),
 });
 
 export default connect(maptStateToProps, mapDispatchToProps)(Loans);

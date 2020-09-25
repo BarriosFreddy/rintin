@@ -9,8 +9,6 @@ export const CHANGE_LAYOUT = "CHANGE_LAYOUT";
 export const NAV_CONTENT_LEAVE = "NAV_CONTENT_LEAVE";
 export const NAV_COLLAPSE_LEAVE = "NAV_COLLAPSE_LEAVE";
 
-
-
 export const LOAN_TYPE = "LOAN_TYPE";
 
 export const FETCH_LOAN_START = "FETCH_LOAN_START";
@@ -55,6 +53,13 @@ export const findByIdLoan = (id) => {
   };
 };
 
+export const loanSelected = (loan) => ({
+  type: LOAN_TYPE,
+  payload: {
+    loan,
+  },
+});
+
 export const findLoansStart = () => ({
   type: LOAN_TYPE,
   payload: {
@@ -92,7 +97,7 @@ export const saveLoan = (loan) => {
       dispatch(saveLoanStart());
       await axios({
         url: `${config.api.base}${config.api.loans.save}`,
-        method: "post",
+        method: "POST",
         data: {
           ...loan,
         },
@@ -126,20 +131,20 @@ export const saveLoanFailure = (error) => ({
   },
 });
 
-export const updateLoan = (loan) => {
+export const updateLoan = (id, loan) => {
   return async (dispatch) => {
     try {
       dispatch(updateLoanStart());
       await axios({
-        url: `${config.api.base}${config.api.loans.save}`,
-        method: "post",
+        url: `${config.api.base}${config.api.loans.update}${id}`,
+        method: "PUT",
         data: {
           ...loan,
         },
       });
-      dispatch(saveLoanSuccess());
+      dispatch(updateLoanSuccess());
     } catch (error) {
-      dispatch(saveLoanFailure(error));
+      dispatch(updateLoanFailure(error));
     }
   };
 };

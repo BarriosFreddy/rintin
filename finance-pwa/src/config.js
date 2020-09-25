@@ -32,7 +32,7 @@ export default {
             findAll: '/loans',
             findById: '/loans/',
             save: '/loans',
-            update: '/loans'
+            update: '/loans/'
         },
 
     }

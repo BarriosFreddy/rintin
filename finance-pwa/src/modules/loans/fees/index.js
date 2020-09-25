@@ -1,9 +1,10 @@
 import React from "react";
+import { connect } from "react-redux";
 
-import moment from "moment";
 import FeesForm from "./FeesForm";
 import FeesTable from "./FeesTable";
 import { Card, Button } from "react-bootstrap";
+import { updateLoan, findByIdLoan } from "../../../store/actions";
 const Action = {
   EDIT: "E",
   CREATE: "C",
@@ -23,31 +24,36 @@ class Fees extends React.Component {
     };
   }
 
-  randomNumber() {
-    return `20200000000${Math.floor(Math.random() * 10)}`;
+  componentDidUpdate(prevProps) {
+    if (!prevProps.updating && this.props.updating) {
+      const {
+        loan: { _id: id },
+      } = this.props;
+      this.props.findByIdLoan(id);
+    } else if (!prevProps.fetching && this.props.fetching) {
+      this.setState({ action: Action.INITIAL });
+    }
   }
 
   handleSave(record) {
-    const { action, records } = this.state;
+    const { action } = this.state;
     switch (action) {
       case Action.CREATE:
-        const recordsCopy = [...records];
-        recordsCopy.push({
-          ...record,
-          code: this.randomNumber(),
-          createdAt: moment().format(),
-        });
-        this.setState({ records: recordsCopy, action: Action.INITIAL });
+        const { loan } = this.props;
+        const { fees = [], _id: id } = loan;
+        const feesArray = [...fees, record];
+        const loanToUpdate = {
+          ...loan,
+          fees: feesArray,
+        };
+        delete loanToUpdate._id;
+        this.props.update(id, loanToUpdate);
         break;
       case Action.EDIT:
-        const index = recordsCopy.findIndex((item) => item.id === record.id);
-        recordsCopy.splice(index, 1, record);
-        this.setState({ records: recordsCopy });
         break;
       default:
         break;
     }
-    this.setState({ action: Action.INITIAL });
   }
 
   handleEdit(record) {
@@ -95,4 +101,17 @@ class Fees extends React.Component {
   }
 }
 
-export default Fees;
+const maptStateToProps = (state) => {
+  const { loan, updating } = state.loans;
+  return {
+    loan,
+    updating,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  update: (id, loan) => dispatch(updateLoan(id, loan)),
+  findByIdLoan: (id) => dispatch(findByIdLoan(id)),
+});
+
+export default connect(maptStateToProps, mapDispatchToProps)(Fees);

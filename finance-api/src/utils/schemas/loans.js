@@ -14,6 +14,7 @@ const activeSchema = joi.boolean();
 const feeSchema = joi.object().keys({
   amount: amountSchema.required(),
   createdAt: createdAtSchema.required(),
+  comments: commentsSchema.optional(),
 })
 
 const loansIdSchema = joi.object().keys({

@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Form } from "react-bootstrap";
 import Fee from "../../../models/loans/Fee";
+import moment from "moment";
 
 class FeesForm extends React.Component {
   constructor(props) {
@@ -14,7 +15,24 @@ class FeesForm extends React.Component {
   }
 
   handleSave() {
-    this.props.onSave(this.state.fee);
+    if (this.validateForm()) {
+      const feeToSave = {
+        ...this.state.fee,
+        createdAt: moment().format("MM-DD-YYYY"),
+      };
+      this.props.onSave(feeToSave);
+    }
+  }
+
+  validateForm() {
+    const {
+      fee: { amount },
+    } = this.state;
+    let isOk = true;
+
+    if (!amount) isOk = false;
+
+    return isOk;
   }
 
   handleChange(event) {

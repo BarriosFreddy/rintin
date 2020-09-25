@@ -1,8 +1,7 @@
 class Fee {
   constructor() {
     this.amount = 0.0;
-    this.comments = "";
-    this.loanId = null;
+    this.comments = undefined;
     this.createdAt = null;
   }
 }
