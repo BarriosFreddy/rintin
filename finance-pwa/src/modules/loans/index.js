@@ -5,6 +5,7 @@ import {
   saveLoan,
   updateLoan,
   loanSelected,
+  findByIdLoan,
 } from "../../store/actions";
 import LoansForm from "./LoansForm";
 import LoansTable from "./LoansTable";
@@ -31,11 +32,13 @@ class Loans extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetch();
+    this.props.findAll();
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (!prevProps.saving && this.props.saving) {
+      this.props.findAll();
+      this.setState({ action: Action.INITIAL });
     } else if (!prevProps.fetching && this.props.fetching) {
     }
   }
@@ -54,7 +57,6 @@ class Loans extends React.Component {
       default:
         break;
     }
-    this.setState({ action: Action.INITIAL });
   }
 
   handleShow(record) {
@@ -72,7 +74,7 @@ class Loans extends React.Component {
   }
 
   handleBack() {
-    this.props.fetch();
+    this.props.findAll();
     this.setState({ action: Action.INITIAL });
   }
 
@@ -114,10 +116,11 @@ const maptStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  fetch: () => dispatch(findAllLoan()),
+  findAll: () => dispatch(findAllLoan()),
   save: (loan) => dispatch(saveLoan(loan)),
   update: (loan) => dispatch(updateLoan(loan)),
   loanSelected: (loan) => dispatch(loanSelected(loan)),
+  findByIdLoan: (id) => dispatch(findByIdLoan(id)),
 });
 
 export default connect(maptStateToProps, mapDispatchToProps)(Loans);

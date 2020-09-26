@@ -4,6 +4,7 @@ const joi = require("@hapi/joi");
 const idSchema = joi.string().regex(/[\da-fA-F]{24}$/);
 const amountSchema = joi.number();
 const debtorSchema = joi.string();
+const codeSchema = joi.string();
 const percentageSchema = joi.number();
 const feeDefaultSchema = joi.number();
 const commentsSchema = joi.string();
@@ -12,6 +13,7 @@ const updatedAtSchema = joi.date();
 const activeSchema = joi.boolean();
 
 const feeSchema = joi.object().keys({
+  code: codeSchema,
   amount: amountSchema.required(),
   createdAt: createdAtSchema.required(),
   comments: commentsSchema.optional(),
@@ -34,6 +36,7 @@ const loansCreateSchema = joi.object().keys({
 });
 
 const loansUpdateSchema = joi.object().keys({
+  code: codeSchema,
   amount: amountSchema,
   debtor: debtorSchema,
   percentage: percentageSchema,

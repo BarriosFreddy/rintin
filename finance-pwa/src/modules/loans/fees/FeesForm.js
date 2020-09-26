@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Form } from "react-bootstrap";
 import Fee from "../../../models/loans/Fee";
 import moment from "moment";
+import utils  from "../../../utils"
 
 class FeesForm extends React.Component {
   constructor(props) {

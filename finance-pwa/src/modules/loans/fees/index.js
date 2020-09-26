@@ -5,6 +5,7 @@ import FeesForm from "./FeesForm";
 import FeesTable from "./FeesTable";
 import { Card, Button } from "react-bootstrap";
 import { updateLoan, findByIdLoan } from "../../../store/actions";
+import utils from "../../../utils";
 const Action = {
   EDIT: "E",
   CREATE: "C",
@@ -25,31 +26,41 @@ class Fees extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (!prevProps.updating && this.props.updating) {
+    const { fetching, updating } = this.props;
+    if (!prevProps.updating && updating) {
       const {
         loan: { _id: id },
       } = this.props;
       this.props.findByIdLoan(id);
-    } else if (!prevProps.fetching && this.props.fetching) {
+    } else if (!prevProps.fetching && fetching) {
       this.setState({ action: Action.INITIAL });
     }
   }
 
   handleSave(record) {
     const { action } = this.state;
+    const { loan } = this.props;
+    const { fees = [], _id: id } = loan;
+    let loanToUpdate = {};
     switch (action) {
       case Action.CREATE:
-        const { loan } = this.props;
-        const { fees = [], _id: id } = loan;
-        const feesArray = [...fees, record];
-        const loanToUpdate = {
+        record.code = utils.generateCode();
+        loanToUpdate = {
           ...loan,
-          fees: feesArray,
+          fees: [...fees, record],
         };
         delete loanToUpdate._id;
         this.props.update(id, loanToUpdate);
         break;
       case Action.EDIT:
+        const feeIndex = fees.findIndex((fee) => fee.code === record.code);
+        fees.splice(feeIndex, 1, record);
+        loanToUpdate = {
+          ...loan,
+          fees,
+        };
+        delete loanToUpdate._id;
+        this.props.update(id, loanToUpdate);
         break;
       default:
         break;
@@ -102,10 +113,11 @@ class Fees extends React.Component {
 }
 
 const maptStateToProps = (state) => {
-  const { loan, updating } = state.loans;
+  const { loan, updating, fetching } = state.loans;
   return {
     loan,
     updating,
+    fetching,
   };
 };
 
