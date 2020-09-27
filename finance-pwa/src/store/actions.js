@@ -10,6 +10,7 @@ export const NAV_CONTENT_LEAVE = "NAV_CONTENT_LEAVE";
 export const NAV_COLLAPSE_LEAVE = "NAV_COLLAPSE_LEAVE";
 
 export const LOAN_TYPE = "LOAN_TYPE";
+export const AUTH_TYPE = "AUTH_TYPE";
 
 export const FETCH_LOAN_START = "FETCH_LOAN_START";
 export const FETCH_LOAN_SUCCESS = "FETCH_LOAN_SUCCESS";
@@ -167,6 +168,52 @@ export const updateLoanFailure = (error) => ({
   type: LOAN_TYPE,
   payload: {
     updating: false,
+    error,
+  },
+});
+
+export const authenticate = (credentials) => {
+  return async (dispatch) => {
+    try {
+      const { username, password } = credentials;
+      dispatch(authStart());
+      const credentialsdb64 = btoa(`${username}:${password}`);
+      const response = await axios({
+        url: `${config.api.base}${config.api.auth.authenticate}`,
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Basic ${credentialsdb64}`,
+        },
+      });
+      localStorage.setItem("token", response.data.id_token);
+      dispatch(authSuccess());
+    } catch (error) {
+      dispatch(authFailure(error));
+    }
+  };
+};
+
+export const authStart = () => ({
+  type: AUTH_TYPE,
+  payload: {
+    authenticating: true,
+  },
+});
+
+export const authSuccess = () => ({
+  type: AUTH_TYPE,
+  payload: {
+    authenticating: false,
+    loggedIn: true
+  },
+});
+
+export const authFailure = (error) => ({
+  type: AUTH_TYPE,
+  payload: {
+    authenticating: false,
+    loggedIn: false,
     error,
   },
 });

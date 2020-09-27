@@ -24,6 +24,9 @@ export default {
     layout6BackSize : '', // used only for pre-layout = layout-6
     api: {
         base: 'http://localhost:3001',
+        auth: {
+            authenticate: '/auth/authenticate'
+        },
         users: {
             findAll: '/users',
             update: '/users'

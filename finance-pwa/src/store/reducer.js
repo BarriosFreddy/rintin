@@ -11,7 +11,11 @@ const initialState = {
     saving: false,
     updating: false,
     loans: [],
-    loan: null
+    loan: null,
+  },
+  auth: {
+    authenticating: false,
+    loggedIn: false,
   }
 };
 
@@ -95,8 +99,16 @@ const reducer = (state = initialState, action) => {
         ...state,
         loans: {
           ...state.loans,
-          ...action.payload
-        }
+          ...action.payload,
+        },
+      };
+    case actionTypes.AUTH_TYPE:
+      return {
+        ...state,
+        auth: {
+          ...state.auth,
+          ...action.payload,
+        },
       };
     default:
       return state;

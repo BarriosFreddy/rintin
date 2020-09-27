@@ -2,15 +2,17 @@ const router = require("express").Router();
 const passport = require("passport");
 const boom = require("@hapi/boom");
 const jwt = require("jsonwebtoken");
- const { AUTH } = require('../../constants').RESOURCES;
-const { AUTH_JWT_SECRET } = process.env;
+const { AUTH } = require("../../constants").RESOURCES;
+const { AUTH_JWT_SECRET, ENV = "dev" } = process.env;
+
+const isProd = ENV === "prod";
 
 const authRouter = () => {
   router.post(AUTH.AUTHENTICATE, (req, res, next) => {
     passport.authenticate("basic", (err, data, info) => {
       try {
         if (err || !data) {
-          console.log({ err, data});
+          console.log({ err, data });
           return next(boom.unauthorized());
         }
         req.login(data, { session: false }, (err) => {
@@ -26,6 +28,11 @@ const authRouter = () => {
             expiresIn: "1h",
           });
 
+          res.cookie("jwt", token, {
+            httpOnly: true,
+            secure: isProd,
+            maxAge: 3600000,
+          });
           res.status(200).json({
             id_token: token,
             user: {
