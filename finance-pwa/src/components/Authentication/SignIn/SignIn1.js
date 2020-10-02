@@ -21,17 +21,13 @@ class SignUp1 extends React.Component {
   componentDidUpdate(prevProps) {
     const { authenticating } = this.props;
     if (!prevProps.authenticating && authenticating) {
-      this.props.history.push("/dashboard/default");
+     this.props.history.push("/dashboard/default");
     }
   }
 
   login() {
     const { username, password } = this.state;
-    console.log({ username, password });
     if (this.validateForm()) {
-      console.log({ username, password });
-
-      console.log(this.props.authenticate);
       this.props.authenticate({
         username,
         password,

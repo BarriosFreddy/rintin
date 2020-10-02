@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
+import { logout } from '../../../../../store/actions'
 import {Dropdown} from 'react-bootstrap';
 
 import ChatList from './ChatList';
@@ -10,9 +12,18 @@ import Avatar2 from '../../../../../assets/images/user/avatar-2.jpg';
 import Avatar3 from '../../../../../assets/images/user/avatar-3.jpg';
 
 class NavRight extends Component {
+    constructor(props) {
+        super(props)
+        this.handleLogout = this.handleLogout.bind(this)
+    }
     state = {
         listOpen: false
     };
+
+    handleLogout() {
+        this.props.logout()
+        //this.props.history.push("/auth/signin-1");
+    }
 
     render() {
 
@@ -88,7 +99,8 @@ class NavRight extends Component {
                                 <div className="pro-head">
                                     <img src={Avatar1} className="img-radius" alt="User Profile"/>
                                     <span>John Doe</span>
-                                    <a href={DEMO.BLANK_LINK} className="dud-logout" title="Logout">
+                                    <a href={DEMO.BLANK_LINK} className="dud-logout" title="Logout"
+                                    onClick={this.handleLogout}>
                                         <i className="feather icon-log-out"/>
                                     </a>
                                 </div>
@@ -108,4 +120,7 @@ class NavRight extends Component {
     }
 }
 
-export default NavRight;
+const mapDispatchToProps = (dispatch) => ({
+    logout: () => dispatch(logout())
+})
+export default connect(null, mapDispatchToProps)(NavRight);

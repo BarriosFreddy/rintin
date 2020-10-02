@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {NavLink} from 'react-router-dom';
+import {NavLink, Link} from 'react-router-dom';
 import {withRouter} from 'react-router-dom';
 import windowSize from 'react-window-size';
 
@@ -23,6 +23,7 @@ class NavItem extends Component {
         }
 
         let subContent;
+        console.log({external : this.props.item.external});
         if(this.props.item.external) {
             subContent = (
                 <a href={this.props.item.url} target='_blank' rel='noopener noreferrer'>
@@ -33,11 +34,11 @@ class NavItem extends Component {
             );
         } else {
             subContent = (
-                <NavLink to={this.props.item.url} className="nav-link" exact={true} target={itemTarget}>
+                <Link to={this.props.item.url} className="nav-link" exact="true" target={itemTarget}>
                     <NavIcon items={this.props.item}/>
                     {itemTitle}
                     <NavBadge layout={this.props.layout} items={this.props.item}/>
-                </NavLink>
+                </Link>
             );
         }
         let mainContent = '';

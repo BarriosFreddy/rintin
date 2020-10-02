@@ -205,7 +205,7 @@ export const authSuccess = () => ({
   type: AUTH_TYPE,
   payload: {
     authenticating: false,
-    loggedIn: true
+    loggedIn: true,
   },
 });
 
@@ -215,5 +215,19 @@ export const authFailure = (error) => ({
     authenticating: false,
     loggedIn: false,
     error,
+  },
+});
+
+export const logout = () => {
+  return async (dispatch) => {
+    localStorage.removeItem("token");
+    dispatch(logoutSuccess());
+  };
+};
+
+export const logoutSuccess = () => ({
+  type: AUTH_TYPE,
+  payload: {
+    loggedIn: false,
   },
 });
