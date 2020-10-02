@@ -25,7 +25,7 @@ const authRouter = () => {
             email,
           };
           const token = jwt.sign(payload, AUTH_JWT_SECRET, {
-            expiresIn: "1h",
+            expiresIn: "24h",
           });
 
           res.cookie("jwt", token, {
@@ -33,6 +33,7 @@ const authRouter = () => {
             secure: isProd,
             maxAge: 3600000,
           });
+
           res.status(200).json({
             id_token: token,
             user: {

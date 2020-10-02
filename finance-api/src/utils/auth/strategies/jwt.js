@@ -5,6 +5,14 @@ const AccountsService = require("../../../services/AccountsService");
 
 const { AUTH_JWT_SECRET } = process.env;
 
+const extractTokenFromCookie = (req) => {
+  let token = null
+  console.log({req});
+  if(cookies) token = req.cookies.jwt
+  
+  return token;
+}
+
 passport.use(
   new Strategy(
     {
