@@ -7,6 +7,8 @@ class LoansForm extends React.Component {
     super(props);
     this.handleSave = this.handleSave.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
+
     const loan = props.loan || new Loan();
     this.state = {
       loan,
@@ -17,6 +19,10 @@ class LoansForm extends React.Component {
     if (this.validateForm()) {
       this.props.onSave(this.state.loan);
     }
+  }
+
+  handleCancel() {
+    this.props.onCancel();
   }
 
   validateForm() {
@@ -103,6 +109,9 @@ class LoansForm extends React.Component {
         </Form.Group>
         <Button variant="success" type="button" onClick={this.handleSave}>
           SAVE
+        </Button>
+        <Button type="button" onClick={this.handleCancel}>
+          CANCEL
         </Button>
       </Form>
     );

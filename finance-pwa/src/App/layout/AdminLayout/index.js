@@ -54,7 +54,7 @@ class AdminLayout extends Component {
       this.fullScreenExitHandler
     );
     document.addEventListener("MSFullscreenChange", this.fullScreenExitHandler);
-
+    const loggedIn = !!window.localStorage.getItem('token')
     const menu = routes.map((route, index) => {
       return route.component ? (
         <Route
@@ -62,8 +62,9 @@ class AdminLayout extends Component {
           path={route.path}
           exact={route.exact}
           name={route.name}
-          render={(props) => <route.component {...props} />}
-        />
+        >
+          {loggedIn ? <route.component /> : <Redirect to={"/auth/signin"} />}
+        </Route>
       ) : null;
     });
 

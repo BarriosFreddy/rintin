@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import {Dropdown} from 'react-bootstrap';
 import { connect } from 'react-redux'
 import { logout } from '../../../../../store/actions'
-import {Dropdown} from 'react-bootstrap';
 
 import ChatList from './ChatList';
 import Aux from "../../../../../hoc/_Aux";
@@ -16,6 +16,7 @@ class NavRight extends Component {
         super(props)
         this.handleLogout = this.handleLogout.bind(this)
     }
+
     state = {
         listOpen: false
     };
@@ -24,6 +25,7 @@ class NavRight extends Component {
         this.props.logout()
         //this.props.history.push("/auth/signin-1");
     }
+
 
     render() {
 

@@ -70,10 +70,12 @@ class Loans extends React.Component {
   }
 
   handleAdd() {
+    this.props.loanSelected(null);
     this.setState({ action: Action.CREATE });
   }
 
   handleBack() {
+    this.props.loanSelected(null);
     this.props.findAll();
     this.setState({ action: Action.INITIAL });
   }
@@ -93,7 +95,7 @@ class Loans extends React.Component {
             />
           )}
           {[Action.CREATE, Action.EDIT].includes(action) && (
-            <LoansForm loan={loan} onSave={this.handleSave} />
+            <LoansForm loan={loan} onSave={this.handleSave} onCancel={this.handleBack} />
           )}
           {action === Action.FEE && (
             <Fees loan={loan} onBack={this.handleBack} />

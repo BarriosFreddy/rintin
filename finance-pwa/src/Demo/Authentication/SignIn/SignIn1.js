@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 
-import "./../../../assets/scss/style.scss";
+import "../../../assets/scss/style.scss";
 import Aux from "../../../hoc/_Aux";
 import Breadcrumb from "../../../App/layout/AdminLayout/Breadcrumb";
 import { authenticate } from "../../../store/actions";
@@ -17,11 +17,10 @@ class SignUp1 extends React.Component {
       password: "",
     };
   }
-
   componentDidUpdate(prevProps) {
     const { authenticating } = this.props;
-    if (!prevProps.authenticating && authenticating) {
-     this.props.history.push("/dashboard/default");
+    if (prevProps.authenticating && ! authenticating) {
+      this.props.history.push("/dashboard/default");
     }
   }
 
@@ -128,11 +127,11 @@ class SignUp1 extends React.Component {
     );
   }
 }
-
 const mapStateToProps = (state) => {
-  const { authenticating } = state.auth;
+  const { authenticating, loggedIn } = state.auth;
   return {
     authenticating,
+    loggedIn,
   };
 };
 
