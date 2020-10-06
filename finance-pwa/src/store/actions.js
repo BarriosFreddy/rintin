@@ -178,7 +178,7 @@ export const authenticate = (credentials) => {
       const { username, password } = credentials;
       dispatch(authStart());
       const credentialsdb64 = btoa(`${username}:${password}`);
-      const response = await axios({
+      await axios({
         url: `${config.api.base}${config.api.auth.authenticate}`,
         method: "POST",
         headers: {
@@ -186,7 +186,6 @@ export const authenticate = (credentials) => {
           Authorization: `Basic ${credentialsdb64}`,
         },
       });
-      localStorage.setItem("token", response.data.id_token);
       dispatch(authSuccess());
     } catch (error) {
       dispatch(authFailure(error));
@@ -218,16 +217,20 @@ export const authFailure = (error) => ({
   },
 });
 
-export const logout = () => {
-  return async (dispatch) => {
-    localStorage.removeItem("token");
-    dispatch(logoutSuccess());
-  };
-};
-
 export const logoutSuccess = () => ({
   type: AUTH_TYPE,
   payload: {
     loggedIn: false,
   },
 });
+
+export const logout = () => {
+  return async (dispatch) => {
+    try {
+      await axios.get(`${config.api.base}${config.api.auth.logout}`);
+      dispatch(logoutSuccess());
+    } catch (error) {
+      dispatch(authFailure(error));
+    }
+  };
+};

@@ -23,7 +23,7 @@ class NavRight extends Component {
 
     handleLogout() {
         this.props.logout()
-        //this.props.history.push("/auth/signin-1");
+        this.props.history.push("/auth/signin");
     }
 
 

@@ -54,7 +54,7 @@ class AdminLayout extends Component {
       this.fullScreenExitHandler
     );
     document.addEventListener("MSFullscreenChange", this.fullScreenExitHandler);
-    const loggedIn = !!window.localStorage.getItem('token')
+    const {loggedIn} = this.props
     const menu = routes.map((route, index) => {
       return route.component ? (
         <Route

@@ -25,7 +25,8 @@ export default {
     api: {
         base: 'http://localhost:3001',
         auth: {
-            authenticate: '/auth/authenticate'
+            authenticate: '/auth/authenticate',
+            logout: '/auth/logout',
         },
         users: {
             findAll: '/users',

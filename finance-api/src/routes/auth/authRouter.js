@@ -7,6 +7,7 @@ const { AUTH_JWT_SECRET, ENV = "dev" } = process.env;
 
 const isProd = ENV === "prod";
 
+const JWT_COOKIE_NAME = "jwt";
 const authRouter = () => {
   router.post(AUTH.AUTHENTICATE, (req, res, next) => {
     passport.authenticate("basic", (err, data, info) => {
@@ -28,7 +29,7 @@ const authRouter = () => {
             expiresIn: "24h",
           });
 
-          res.cookie("jwt", token, {
+          res.cookie(JWT_COOKIE_NAME, token, {
             httpOnly: true,
             secure: isProd,
             maxAge: 3600000,
@@ -47,6 +48,11 @@ const authRouter = () => {
       }
     })(req, res, next);
   });
+
+  router.get('/logout', (req, res) => {
+    res.clearCookie(JWT_COOKIE_NAME)
+    res.status(200).send()
+  })
 
   return router;
 };

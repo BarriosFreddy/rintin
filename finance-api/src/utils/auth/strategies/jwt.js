@@ -1,23 +1,16 @@
 const passport = require("passport");
-const { Strategy, ExtractJwt } = require("passport-jwt");
+const { Strategy } = require("passport-jwt");
 const boom = require("@hapi/boom");
 const AccountsService = require("../../../services/AccountsService");
+const { extractTokenFromCookie } = require("../../index");
 
 const { AUTH_JWT_SECRET } = process.env;
-
-const extractTokenFromCookie = (req) => {
-  let token = null
-  console.log({req});
-  if(cookies) token = req.cookies.jwt
-  
-  return token;
-}
 
 passport.use(
   new Strategy(
     {
       secretOrKey: AUTH_JWT_SECRET,
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      jwtFromRequest: extractTokenFromCookie,
     },
     async (tokenPayload, cb) => {
       try {
