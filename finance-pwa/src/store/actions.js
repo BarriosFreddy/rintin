@@ -1,5 +1,6 @@
 import axios from "../helpers/axios";
 import config from "../config";
+import constants from "../store/constant";
 
 export const COLLAPSE_MENU = "COLLAPSE_MENU";
 export const COLLAPSE_TOGGLE = "COLLAPSE_TOGGLE";
@@ -178,7 +179,9 @@ export const authenticate = (credentials) => {
       const { username, password } = credentials;
       dispatch(authStart());
       const credentialsdb64 = btoa(`${username}:${password}`);
-      await axios({
+      const {
+        data: { id_token = "" },
+      } = await axios({
         url: `${config.api.base}${config.api.auth.authenticate}`,
         method: "POST",
         headers: {
@@ -186,6 +189,8 @@ export const authenticate = (credentials) => {
           Authorization: `Basic ${credentialsdb64}`,
         },
       });
+      const tokenFragment = id_token.substring(0, 10);
+      window.localStorage.setItem(constants.LOGGED_IN, tokenFragment);
       dispatch(authSuccess());
     } catch (error) {
       dispatch(authFailure(error));

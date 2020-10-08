@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {Dropdown} from 'react-bootstrap';
 import { connect } from 'react-redux'
-import { logout } from '../../../../../store/actions'
 
 import ChatList from './ChatList';
 import Aux from "../../../../../hoc/_Aux";
@@ -22,8 +21,7 @@ class NavRight extends Component {
     };
 
     handleLogout() {
-        this.props.logout()
-        this.props.history.push("/auth/signin");
+        this.props.onLogout()
     }
 
 
@@ -122,7 +120,8 @@ class NavRight extends Component {
     }
 }
 
+const mapStateToProps = state => ({})
+
 const mapDispatchToProps = (dispatch) => ({
-    logout: () => dispatch(logout())
 })
-export default connect(null, mapDispatchToProps)(NavRight);
+export default connect(mapStateToProps, mapDispatchToProps)(NavRight);

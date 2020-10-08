@@ -8,6 +8,14 @@ import DEMO from "../../../../store/constant";
 import * as actionTypes from "../../../../store/actions";
 
 class NavBar extends Component {
+    constructor(props) {
+        super(props)
+        this.handleLogout = this.handleLogout.bind(this)
+    }
+
+    handleLogout() {
+       this.props.onLogout()
+    }
     render() {
         let headerClass = ['navbar', 'pcoded-header', 'navbar-expand-lg', this.props.headerBackColor];
         if (this.props.headerFixedLayout) {
@@ -34,7 +42,7 @@ class NavBar extends Component {
                     <a className="mobile-menu" id="mobile-header" href={DEMO.BLANK_LINK}><i className="feather icon-more-horizontal"/></a>
                     <div className="collapse navbar-collapse">
                         <NavLeft/>
-                        <NavRight rtlLayout={this.props.rtlLayout} />
+                        <NavRight rtlLayout={this.props.rtlLayout} onLogout={this.handleLogout} />
                     </div>
                 </header>
             </Aux>
@@ -54,6 +62,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onToggleNavigation: () => dispatch({type: actionTypes.COLLAPSE_MENU}),
+        logout: () => dispatch(actionTypes.logout())
     }
 };
 

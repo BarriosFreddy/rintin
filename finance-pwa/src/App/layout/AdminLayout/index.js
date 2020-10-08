@@ -15,6 +15,10 @@ import * as actionTypes from "../../../store/actions";
 import "./app.scss";
 
 class AdminLayout extends Component {
+  constructor(props) {
+    super(props)
+    this.handleLogout = this.handleLogout.bind(this)
+  }
   fullScreenExitHandler = () => {
     if (
       !document.fullscreenElement &&
@@ -42,6 +46,10 @@ class AdminLayout extends Component {
     }
   }
 
+  handleLogout() {
+    this.props.history.push('/auth/signin')
+  }
+
   render() {
     /* full screen exit call */
     document.addEventListener("fullscreenchange", this.fullScreenExitHandler);
@@ -54,7 +62,7 @@ class AdminLayout extends Component {
       this.fullScreenExitHandler
     );
     document.addEventListener("MSFullscreenChange", this.fullScreenExitHandler);
-    const {loggedIn} = this.props
+    const { loggedIn } = this.props;
     const menu = routes.map((route, index) => {
       return route.component ? (
         <Route
@@ -62,9 +70,14 @@ class AdminLayout extends Component {
           path={route.path}
           exact={route.exact}
           name={route.name}
-        >
-          {loggedIn ? <route.component /> : <Redirect to={"/auth/signin"} />}
-        </Route>
+          render={(props) => {
+            return loggedIn ? (
+              <route.component {...props} />
+            ) : (
+              <Redirect to={"/auth/signin"} />
+            );
+          }}
+        ></Route>
       ) : null;
     });
 
@@ -72,7 +85,7 @@ class AdminLayout extends Component {
       <Aux>
         <Fullscreen enabled={this.props.isFullScreen}>
           <Navigation />
-          <NavBar />
+          <NavBar onLogout={this.handleLogout}/>
           <div
             className="pcoded-main-container"
             onClick={() => this.mobileOutClickHandler}

@@ -1,5 +1,6 @@
 import * as actionTypes from "./actions";
 import config from "./../config";
+import constants from "../store/constant";
 
 const initialState = {
   isOpen: [], //for active default menu
@@ -15,7 +16,7 @@ const initialState = {
   },
   auth: {
     authenticating: false,
-    loggedIn: false,
+    loggedIn: !!(localStorage.getItem(constants.LOGGED_IN)),
   }
 };
 
