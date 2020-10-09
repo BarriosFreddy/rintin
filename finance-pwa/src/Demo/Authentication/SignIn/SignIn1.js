@@ -18,15 +18,17 @@ class SignUp1 extends React.Component {
     };
   }
   componentDidUpdate(prevProps) {
-    const { authenticating } = this.props;
-    if (prevProps.authenticating && !authenticating) {
+    const { authenticating, loggedIn } = this.props;
+    if (prevProps.authenticating && !authenticating && loggedIn) {
       this.props.history.push("/dashboard/default");
+    } else if (!authenticating && !loggedIn) {
     }
   }
 
   login() {
     const { username, password } = this.state;
     if (this.validateForm()) {
+      this.setState({ loading: true });
       this.props.authenticate({
         username,
         password,
@@ -54,6 +56,7 @@ class SignUp1 extends React.Component {
 
   render() {
     const { username, password } = this.state;
+    const { authenticating } = this.props;
     return (
       <Aux>
         <Breadcrumb />
@@ -79,6 +82,7 @@ class SignUp1 extends React.Component {
                     className="form-control"
                     placeholder="Email"
                     onChange={this.handleChange}
+                    disabled={authenticating}
                   />
                 </div>
                 <div className="input-group mb-4">
@@ -89,6 +93,7 @@ class SignUp1 extends React.Component {
                     className="form-control"
                     placeholder="password"
                     onChange={this.handleChange}
+                    disabled={authenticating}
                   />
                 </div>
                 <div className="form-group text-left">
@@ -108,6 +113,7 @@ class SignUp1 extends React.Component {
                   className="btn btn-primary shadow-2 mb-4"
                   type="button"
                   onClick={this.login}
+                  disabled={authenticating}
                 >
                   Login
                 </button>

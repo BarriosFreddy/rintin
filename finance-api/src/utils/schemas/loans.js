@@ -7,6 +7,7 @@ const debtorSchema = joi.string();
 const codeSchema = joi.string();
 const percentageSchema = joi.number();
 const feeDefaultSchema = joi.number();
+const collectSchema = joi.string();
 const commentsSchema = joi.string();
 const createdAtSchema = joi.date();
 const updatedAtSchema = joi.date();
@@ -28,6 +29,7 @@ const loansCreateSchema = joi.object().keys({
   debtor: debtorSchema.required(),
   percentage: percentageSchema.required(),
   feeDefault: feeDefaultSchema,
+  collect: collectSchema.required(),
   comments: commentsSchema.optional(),
   active: activeSchema,
   fees: joi.array().items(feeSchema),
@@ -41,6 +43,7 @@ const loansUpdateSchema = joi.object().keys({
   debtor: debtorSchema,
   percentage: percentageSchema,
   feeDefault: feeDefaultSchema,
+  collect: collectSchema,
   comments: commentsSchema,
   active: activeSchema,
   fees: joi.array().items(feeSchema),

@@ -49,8 +49,9 @@ class LoansForm extends React.Component {
 
   render() {
     const {
-      loan: { debtor, amount, percentage, feeDefault, comments },
+      loan: { debtor, amount, percentage, feeDefault, collect, comments },
     } = this.state;
+    const { loading } = this.props;
     return (
       <Form>
         <Form.Group controlId="debtor">
@@ -97,6 +98,19 @@ class LoansForm extends React.Component {
             onChange={this.handleChange}
           />
         </Form.Group>
+        <Form.Group controlId="collect">
+          <Form.Label>Collect</Form.Label>
+          <Form.Control
+            as="select"
+            name="collect"
+            value={collect}
+            onChange={this.handleChange}
+          >
+            <option>Daily</option>
+            <option>Biweekly</option>
+            <option>Monthly</option>
+          </Form.Control>
+        </Form.Group>
         <Form.Group controlId="comments">
           <Form.Label>Comments</Form.Label>
           <Form.Control
@@ -107,7 +121,12 @@ class LoansForm extends React.Component {
             onChange={this.handleChange}
           />
         </Form.Group>
-        <Button variant="success" type="button" onClick={this.handleSave}>
+        <Button
+          variant="success"
+          type="button"
+          disabled={loading}
+          onClick={this.handleSave}
+        >
           SAVE
         </Button>
         <Button type="button" onClick={this.handleCancel}>

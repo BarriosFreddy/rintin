@@ -27,12 +27,12 @@ class Fees extends React.Component {
 
   componentDidUpdate(prevProps) {
     const { fetching, updating } = this.props;
-    if (!prevProps.updating && updating) {
+    if (prevProps.updating && !updating) {
       const {
         loan: { _id: id },
       } = this.props;
       this.props.findByIdLoan(id);
-    } else if (!prevProps.fetching && fetching) {
+    } else if (prevProps.fetching && !fetching) {
       this.setState({ action: Action.INITIAL });
     }
   }

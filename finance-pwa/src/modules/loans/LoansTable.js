@@ -1,5 +1,9 @@
 import React from "react";
 import { Table, Button } from "react-bootstrap";
+import moment from "moment";
+import contants from "../../constants";
+
+const { DATE_FORMAT } = contants;
 
 class LoansTable extends React.Component {
   constructor(props) {
@@ -7,6 +11,7 @@ class LoansTable extends React.Component {
     this.handleEdit = this.handleEdit.bind(this);
     this.handleShow = this.handleShow.bind(this);
     this.handleAdd = this.handleAdd.bind(this);
+    this.handleLoadMore = this.handleLoadMore.bind(this);
   }
 
   handleEdit(record) {
@@ -21,23 +26,35 @@ class LoansTable extends React.Component {
     this.props.onAdd();
   }
 
+  handleLoadMore() {}
+
   render() {
+    const { records } = this.props;
     return (
       <Table responsive hover size="md">
         <thead>
           <tr>
+            <td colSpan="4">
+              <Button variant="success" size="sm" onClick={this.handleAdd}>
+                Add
+              </Button>
+            </td>
+          </tr>
+          <tr>
             <th>Name</th>
             <th>Amount</th>
+            <th># Fees</th>
             <th>Created at</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
-          {this.props.records.map((record, index) => (
+          {records.map((record, index) => (
             <tr key={index}>
               <td>{record.debtor}</td>
               <td>{record.amount}</td>
-              <td>{record.createdAt}</td>
+              <td>{(record.fees ? record.fees.length : 0) + "/22"}</td>
+              <td>{moment(record.createdAt).format(DATE_FORMAT)}</td>
               <td>
                 <Button
                   variant="primary"
@@ -57,14 +74,11 @@ class LoansTable extends React.Component {
             </tr>
           ))}
           <tr>
-            <td>
-              <Button variant="success" size="sm" onClick={this.handleAdd}>
-                Add
+            <td colSpan="4">
+              <Button size="sm" onClick={this.handleLoadMore}>
+                Load more
               </Button>
             </td>
-            <td/>
-            <td/>
-            <td/>
           </tr>
         </tbody>
       </Table>

@@ -35,11 +35,13 @@ class Loans extends React.Component {
     this.props.findAll();
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (!prevProps.saving && this.props.saving) {
-      this.props.findAll();
+  componentDidUpdate(prevProps) {
+    const { saving, updating, fetching } = this.props;
+    if (prevProps.saving && !saving) {
       this.setState({ action: Action.INITIAL });
-    } else if (!prevProps.fetching && this.props.fetching) {
+      this.props.findAll();
+    } if (prevProps.updating && !updating) {
+    } else if (!prevProps.fetching && fetching) {
     }
   }
 
@@ -51,8 +53,11 @@ class Loans extends React.Component {
         this.props.save(record);
         break;
       case Action.EDIT:
+        const { _id: id } = record;
         record.updatedAt = new Date().getTime();
-        this.props.update(record);
+        delete record._id;
+        this.props.update(id, record);
+        record._id = id
         break;
       default:
         break;
@@ -82,7 +87,7 @@ class Loans extends React.Component {
 
   render() {
     const { action } = this.state;
-    const { loans, loan } = this.props;
+    const { loans, loan, saving, updating } = this.props;
     return (
       <Card>
         <Card.Body>
@@ -95,7 +100,12 @@ class Loans extends React.Component {
             />
           )}
           {[Action.CREATE, Action.EDIT].includes(action) && (
-            <LoansForm loan={loan} onSave={this.handleSave} onCancel={this.handleBack} />
+            <LoansForm
+              loan={loan}
+              loading={saving || updating}
+              onSave={this.handleSave}
+              onCancel={this.handleBack}
+            />
           )}
           {action === Action.FEE && (
             <Fees loan={loan} onBack={this.handleBack} />
@@ -120,7 +130,7 @@ const maptStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
   findAll: () => dispatch(findAllLoan()),
   save: (loan) => dispatch(saveLoan(loan)),
-  update: (loan) => dispatch(updateLoan(loan)),
+  update: (id, loan) => dispatch(updateLoan(id, loan)),
   loanSelected: (loan) => dispatch(loanSelected(loan)),
   findByIdLoan: (id) => dispatch(findByIdLoan(id)),
 });
