@@ -24,8 +24,11 @@ class MongodbLib {
     }
   }
 
-  async getAll(collection, query) {
-    return await this.database.collection(collection).find(query).toArray();
+  async getAll(collection, queryFields = {}, { size, page } = {}) {
+    let query = this.database.collection(collection).find(queryFields);
+    if (size) query = query.limit(Number(size));
+    if (size && page) query = query.skip(Number(size) * Number(page));
+    return await query.toArray();
   }
 
   async get(collection, id) {

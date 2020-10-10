@@ -10,7 +10,9 @@ const {
 
 const router = require("express").Router();
 
-const { LOANS: { SAVE, UPDATE, FIND_BY_ID, FIND_ALL, DELETE } } = RESOURCES;
+const {
+  LOANS: { SAVE, UPDATE, FIND_BY_ID, FIND_ALL, DELETE },
+} = RESOURCES;
 
 const loansRouter = () => {
   router.post(
@@ -50,9 +52,10 @@ const loansRouter = () => {
     FIND_ALL,
     passport.authenticate("jwt", { session: false }),
     async (req, res, next) => {
+      const { size = 10, page = 0 } = req.query;
       try {
-        const trips = await LoansService.findAll();
-        res.status(200).send(trips);
+        const loans = await LoansService.findAll(null, { page, size });
+        res.status(200).send(loans);
       } catch (error) {
         console.error(error);
         next(error);

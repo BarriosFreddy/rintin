@@ -27,8 +27,8 @@ class LoansService {
   /**
    * List loans
    */
-  findAll(query) {
-    return mongodbLib.getAll(COLLECTION, query);
+  findAll(query, pageRequest) {
+    return mongodbLib.getAll(COLLECTION, query, pageRequest);
   }
 
   /**
