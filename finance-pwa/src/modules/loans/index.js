@@ -26,6 +26,8 @@ class Loans extends React.Component {
     this.handleShow = this.handleShow.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
     this.handleBack = this.handleBack.bind(this);
+    this.handleLoadMore = this.handleLoadMore.bind(this);
+
     this.state = {
       action: Action.INITIAL,
     };
@@ -85,18 +87,24 @@ class Loans extends React.Component {
     this.setState({ action: Action.INITIAL });
   }
 
+  handleLoadMore(pageRequest) {
+    this.props.findAll(pageRequest);
+  }
+
   render() {
     const { action } = this.state;
-    const { loans, loan, saving, updating } = this.props;
+    const { loans, loan, saving, updating, fetching } = this.props;
     return (
       <Card>
         <Card.Body>
           {action === Action.INITIAL && (
             <LoansTable
               records={loans}
+              loading={fetching}
               onShow={this.handleShow}
               onEdit={this.handleEdit}
               onAdd={this.handleAdd}
+              onLoadMore={this.handleLoadMore}
             />
           )}
           {[Action.CREATE, Action.EDIT].includes(action) && (
@@ -128,7 +136,7 @@ const maptStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  findAll: () => dispatch(findAllLoan()),
+  findAll: (pageSize) => dispatch(findAllLoan(pageSize)),
   save: (loan) => dispatch(saveLoan(loan)),
   update: (id, loan) => dispatch(updateLoan(id, loan)),
   loanSelected: (loan) => dispatch(loanSelected(loan)),

@@ -8,6 +8,9 @@ const { DATE_FORMAT } = contants;
 class LoansTable extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      size: 10,
+    };
     this.handleEdit = this.handleEdit.bind(this);
     this.handleShow = this.handleShow.bind(this);
     this.handleAdd = this.handleAdd.bind(this);
@@ -26,10 +29,17 @@ class LoansTable extends React.Component {
     this.props.onAdd();
   }
 
-  handleLoadMore() {}
+  handleLoadMore() {
+    const { size: prevSize } = this.state;
+    let size = prevSize + 1;
+    this.props.onLoadMore({
+      size,
+    });
+    this.setState({ size });
+  }
 
   render() {
-    const { records } = this.props;
+    const { records, loading } = this.props;
     return (
       <Table responsive hover size="md">
         <thead>
@@ -75,7 +85,11 @@ class LoansTable extends React.Component {
           ))}
           <tr>
             <td colSpan="100">
-              <Button size="sm" onClick={this.handleLoadMore}>
+              <Button
+                size="sm"
+                disabled={loading}
+                onClick={this.handleLoadMore}
+              >
                 Load more
               </Button>
             </td>
