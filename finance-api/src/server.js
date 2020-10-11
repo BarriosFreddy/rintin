@@ -20,7 +20,8 @@ app.use(helmet())
 app.use(cors({
   origin: [
     'http://localhost:3000',
-    'https://localhost:3000'
+    'https://localhost:3000',
+    'https://financefb-api.herokuapp.com'
   ],
   credentials: true,
 }))
