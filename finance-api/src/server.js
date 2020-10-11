@@ -21,7 +21,8 @@ app.use(cors({
   origin: [
     'http://localhost:3000',
     'https://localhost:3000',
-    'http://financefb-api.herokuapp.com'
+    'http://finance.freddybarrios.com',
+    'https://finance.freddybarrios.com'
   ],
   credentials: true,
 }))
