@@ -191,7 +191,7 @@ export const authenticate = (credentials) => {
         },
       });
       const tokenFragment = id_token.substring(0, 10);
-      window.localStorage.setItem(constants.LOGGED_IN, tokenFragment);
+      window.localStorage.setItem(constants.LOGGED_IN, id_token);
       dispatch(authSuccess());
     } catch (error) {
       dispatch(authFailure(error));
