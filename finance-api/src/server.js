@@ -24,7 +24,7 @@ app.use(cors({
     'http://finance.freddybarrios.com',
     'https://finance.freddybarrios.com'
   ],
-  credentials: false,
+  credentials: true,
 }))
 app.use(cookieParser())
 routes(app);
