@@ -14,6 +14,7 @@ class NavBar extends Component {
     }
 
     handleLogout() {
+        window.localStorage.removeItem('LOGGED_IN')
        this.props.onLogout()
     }
     render() {
