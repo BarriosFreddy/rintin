@@ -79,11 +79,14 @@ class Fees extends React.Component {
     this.props.onBack();
   }
 
+  calculateLeftAmount({ amount, percentage, fees}) {
+      return utils.formatNumber(amount + (amount * (percentage / 100)) - utils.sumFees(fees))
+  }
+
   render() {
     const { action, fee } = this.state;
-    const {
-      loan: { fees = [] },
-    } = this.props;
+    const { loan } = this.props;
+    const { fees = [] } = loan;
     return (
       <>
         <Card>
@@ -92,6 +95,7 @@ class Fees extends React.Component {
             <Button variant="info" size="sm" onClick={this.handleBack}>
               Back
             </Button>
+            <span>Left amount <b>${this.calculateLeftAmount(loan)}</b></span>
           </Card.Header>
           <Card.Body>
             {action === Action.INITIAL && (

@@ -2,6 +2,7 @@ import React from "react";
 import { Table, Button } from "react-bootstrap";
 import moment from "moment";
 import contants from "../../constants";
+import utils from "../../utils";
 
 const { DATE_FORMAT } = contants;
 
@@ -38,10 +39,18 @@ class LoansTable extends React.Component {
     this.setState({ size });
   }
 
+  calculateSumAmount(fees) {
+    return fees ? utils.formatNumber(utils.sumFees(fees)) : 0
+  }
+
+  calculateAmount({amount, percentage}) {
+    return utils.formatNumber(amount + (amount * (percentage / 100)))
+  }
+
   render() {
     const { records, loading } = this.props;
     return (
-      <Table responsive hover size="md">
+      <Table responsive hover size="sm">
         <thead>
           <tr>
             <td colSpan="100">
@@ -54,6 +63,7 @@ class LoansTable extends React.Component {
             <th>Name</th>
             <th>Amount</th>
             <th># Fees</th>
+            <th>Fees Amount</th>
             <th>Created at</th>
             <th></th>
           </tr>
@@ -62,19 +72,20 @@ class LoansTable extends React.Component {
           {records.map((record, index) => (
             <tr key={index}>
               <td>{record.debtor}</td>
-              <td>{record.amount}</td>
-              <td>{(record.fees ? record.fees.length : 0) + "/22"}</td>
+              <td>{'$' + this.calculateAmount(record)}</td>
+              <td>{(record.fees ? record.fees.length : 0)}</td>
+              <td>{'$' + this.calculateSumAmount(record.fees)}</td>
               <td>{moment(record.createdAt).format(DATE_FORMAT)}</td>
               <td>
                 <Button
-                  variant="primary"
+                  variant="link"
                   size="sm"
                   onClick={() => this.handleShow(record)}
                 >
                   Show
                 </Button>
                 <Button
-                  variant="primary"
+                  variant="link"
                   size="sm"
                   onClick={() => this.handleEdit(record)}
                 >

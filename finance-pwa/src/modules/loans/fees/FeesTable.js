@@ -1,5 +1,10 @@
 import React from "react";
 import { Table, Button } from "react-bootstrap";
+import moment from "moment";
+import constants from "../../../constants";
+import utils from "../../../utils";
+
+const { DATE_FORMAT } = constants;
 
 class FeesTable extends React.Component {
   constructor(props) {
@@ -18,7 +23,7 @@ class FeesTable extends React.Component {
 
   render() {
     return (
-      <Table responsive hover size="md">
+      <Table responsive hover size="sm">
         <thead>
           <tr>
             <th>#</th>
@@ -31,11 +36,11 @@ class FeesTable extends React.Component {
           {this.props.records.map((record, index) => (
             <tr key={index}>
               <td>{index + 1}</td>
-              <td>{record.amount}</td>
-              <td>{record.createdAt}</td>
+              <td>{`$${utils.formatNumber(record.amount)}`}</td>
+              <td>{moment(record.createdAt).format(DATE_FORMAT)}</td>
               <td>
                 <Button
-                  variant="primary"
+                  variant="link"
                   size="sm"
                   onClick={() => this.handleEdit(record)}
                 >
