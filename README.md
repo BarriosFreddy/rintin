@@ -3,3 +3,6 @@ cd finance-pwa && yarn start
 cd ../finance-pwa/ && yarn start
 
 git subtree push --prefix finance-api heroku master
+
+### add heroku git repo
+heroku git:remote -a financefb-api

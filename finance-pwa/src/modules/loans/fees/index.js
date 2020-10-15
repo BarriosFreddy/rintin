@@ -101,7 +101,6 @@ class Fees extends React.Component {
             {action === Action.INITIAL && (
               <FeesTable
                 records={fees}
-                onShow={this.handleShow}
                 onEdit={this.handleEdit}
                 onAdd={this.handleAdd}
               />
