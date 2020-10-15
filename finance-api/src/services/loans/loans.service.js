@@ -39,6 +39,16 @@ class LoansService {
     return mongodbLib.get(COLLECTION, id);
   }
 
+  async close(id) {
+    const loan =  await mongodbLib.get(COLLECTION, id);
+    if (loan) {
+      loan.active = false;
+      delete loan._id
+      return await this.update(id, loan)
+    }
+    return null
+  }
+
   /**
    * Delete a loan by id
    * @param {Number} id

@@ -37,7 +37,8 @@ export default {
             findAll: '/loans',
             findById: '/loans/',
             save: '/loans',
-            update: '/loans/'
+            update: '/loans/',
+            close: '/loans/:id/close'
         },
 
     }

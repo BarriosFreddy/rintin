@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import FeesForm from "./FeesForm";
 import FeesTable from "./FeesTable";
 import { Card, Button } from "react-bootstrap";
-import { updateLoan, findByIdLoan } from "../../../store/actions";
+import { updateLoan, findByIdLoan, closeLoan } from "../../../store/actions";
 import utils from "../../../utils";
 const Action = {
   EDIT: "E",
@@ -19,6 +19,7 @@ class Fees extends React.Component {
     this.handleSave = this.handleSave.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
     this.handleBack = this.handleBack.bind(this);
+    this.handleCloseLoan = this.handleCloseLoan.bind(this);
     this.state = {
       action: Action.INITIAL,
       fee: null,
@@ -79,6 +80,11 @@ class Fees extends React.Component {
     this.props.onBack();
   }
 
+  handleCloseLoan() {
+    const { loan: { _id: id } } = this.props;
+    this.props.closeLoan(id)
+  }
+
   calculateLeftAmount({ amount, percentage, fees}) {
       return utils.formatNumber(amount + (amount * (percentage / 100)) - utils.sumFees(fees))
   }
@@ -86,16 +92,19 @@ class Fees extends React.Component {
   render() {
     const { action, fee } = this.state;
     const { loan } = this.props;
-    const { fees = [] } = loan;
+    const { fees = [], active = true } = loan;
     return (
       <>
         <Card>
           <Card.Header>
             <Card.Title as="h5">Fees</Card.Title>
-            <Button variant="info" size="sm" onClick={this.handleBack}>
+            <span>Left amount: <b>${this.calculateLeftAmount(loan)}    </b></span>
+            <Button variant="light"   size="sm" onClick={this.handleCloseLoan} disabled={!active}>
+              Close Loan
+            </Button>
+            <Button className="pull-right" variant="info" size="sm" onClick={this.handleBack}>
               Back
             </Button>
-            <span>Left amount <b>${this.calculateLeftAmount(loan)}</b></span>
           </Card.Header>
           <Card.Body>
             {action === Action.INITIAL && (
@@ -126,6 +135,7 @@ const maptStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
   update: (id, loan) => dispatch(updateLoan(id, loan)),
+  closeLoan: (id) => dispatch(closeLoan(id)),
   findByIdLoan: (id) => dispatch(findByIdLoan(id)),
 });
 

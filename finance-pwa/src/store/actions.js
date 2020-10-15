@@ -174,6 +174,20 @@ export const updateLoanFailure = (error) => ({
   },
 });
 
+export const closeLoan = (id) => {
+  return async (dispatch) => {
+    try {
+      dispatch(updateLoanStart());
+      await axios.get(
+        `${config.api.base}${config.api.loans.close.replace(':id', id)}`
+      );
+      dispatch(updateLoanSuccess());
+    } catch (error) {
+      dispatch(updateLoanFailure(error));
+    }
+  };
+};
+
 export const authenticate = (credentials) => {
   return async (dispatch) => {
     try {

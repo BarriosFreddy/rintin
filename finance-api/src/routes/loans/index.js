@@ -11,7 +11,7 @@ const {
 const router = require("express").Router();
 
 const {
-  LOANS: { SAVE, UPDATE, FIND_BY_ID, FIND_ALL, DELETE },
+  LOANS: { SAVE, UPDATE, FIND_BY_ID, FIND_ALL, DELETE, CLOSE },
 } = RESOURCES;
 
 const loansRouter = () => {
@@ -72,6 +72,22 @@ const loansRouter = () => {
         const { id } = req.params;
         const trips = await LoansService.findById(id);
         res.status(200).send(trips);
+      } catch (error) {
+        console.error(error);
+        next(error);
+      }
+    }
+  );
+
+  router.get(
+    CLOSE,
+    passport.authenticate("jwt", { session: false }),
+    validationHandler(loansIdSchema, "params"),
+    async (req, res, next) => {
+      try {
+        const { id } = req.params;
+        const result = await LoansService.close(id);
+        res.status(200).send(result);
       } catch (error) {
         console.error(error);
         next(error);

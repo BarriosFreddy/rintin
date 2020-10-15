@@ -35,6 +35,7 @@ module.exports = Object.freeze({
     LOANS: {
       URI: "/loans",
       ...GENERIC_ENDPOINTS,
+      CLOSE: "/:id/close"
     },
   },
 });
