@@ -124,12 +124,13 @@ class LoansForm extends React.Component {
         <Button
           variant="success"
           type="button"
+          size="sm"
           disabled={loading}
           onClick={this.handleSave}
         >
           SAVE
         </Button>
-        <Button type="button" onClick={this.handleCancel}>
+        <Button type="button" size="sm" onClick={this.handleCancel}>
           CANCEL
         </Button>
       </Form>

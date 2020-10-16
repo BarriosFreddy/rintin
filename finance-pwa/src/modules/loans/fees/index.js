@@ -81,12 +81,17 @@ class Fees extends React.Component {
   }
 
   handleCloseLoan() {
-    const { loan: { _id: id } } = this.props;
-    this.props.closeLoan(id)
+    const {
+      loan: { _id: id },
+    } = this.props;
+    this.props.closeLoan(id);
   }
 
-  calculateLeftAmount({ amount, percentage, fees}) {
-      return utils.formatNumber(amount + (amount * (percentage / 100)) - utils.sumFees(fees))
+  calculateLeftAmount({ amount, percentage, fees }) {
+    const interests = amount * (percentage / 100);
+    const sum = utils.sumFees(fees);
+    const leftAmount = amount + interests -sum
+    return utils.formatNumber(leftAmount);
   }
 
   render() {
@@ -98,11 +103,23 @@ class Fees extends React.Component {
         <Card>
           <Card.Header>
             <Card.Title as="h5">Fees</Card.Title>
-            <span>Left amount: <b>${this.calculateLeftAmount(loan)}    </b></span>
-            <Button variant="light"   size="sm" onClick={this.handleCloseLoan} disabled={!active}>
+            <span>
+              Left amount: <b>${this.calculateLeftAmount(loan)} </b>
+            </span>
+            <Button
+              variant="light"
+              size="sm"
+              onClick={this.handleCloseLoan}
+              disabled={!active}
+            >
               Close Loan
             </Button>
-            <Button className="pull-right" variant="info" size="sm" onClick={this.handleBack}>
+            <Button
+              className="pull-right"
+              variant="info"
+              size="sm"
+              onClick={this.handleBack}
+            >
               Back
             </Button>
           </Card.Header>

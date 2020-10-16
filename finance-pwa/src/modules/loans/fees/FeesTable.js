@@ -22,6 +22,9 @@ class FeesTable extends React.Component {
   }
 
   render() {
+    let { records } = this.props
+    const fees = [...records]
+    fees.sort((a, b) => Number(b.createdAt) - Number(a.createdAt))
     return (
       <Table responsive hover size="sm">
         <thead>
@@ -33,16 +36,16 @@ class FeesTable extends React.Component {
           </tr>
         </thead>
         <tbody>
-          {this.props.records.map((record, index) => (
+          {fees.map((fee, index) => (
             <tr key={index}>
               <td>{index + 1}</td>
-              <td>{`$${utils.formatNumber(record.amount)}`}</td>
-              <td>{moment(record.createdAt).format(DATE_FORMAT)}</td>
+              <td>{`$${utils.formatNumber(fee.amount)}`}</td>
+              <td>{moment(Number(fee.createdAt)).format(DATE_FORMAT)}</td>
               <td>
                 <Button
                   variant="link"
                   size="sm"
-                  onClick={() => this.handleEdit(record)}
+                  onClick={() => this.handleEdit(fee)}
                 >
                   Edit
                 </Button>

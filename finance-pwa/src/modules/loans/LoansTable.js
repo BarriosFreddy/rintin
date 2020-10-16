@@ -32,7 +32,7 @@ class LoansTable extends React.Component {
 
   handleLoadMore() {
     const { size: prevSize } = this.state;
-    let size = prevSize + 1;
+    let size = prevSize + 10;
     this.props.onLoadMore({
       size,
     });

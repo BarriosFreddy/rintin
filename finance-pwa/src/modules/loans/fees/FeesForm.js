@@ -18,7 +18,7 @@ class FeesForm extends React.Component {
     if (this.validateForm()) {
       const feeToSave = {
         ...this.state.fee,
-        createdAt: moment().format("MM-DD-YYYY"),
+        createdAt: new Date().getTime(),
       };
       this.props.onSave(feeToSave);
     }

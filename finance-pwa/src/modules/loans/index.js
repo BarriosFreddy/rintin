@@ -27,6 +27,7 @@ class Loans extends React.Component {
     this.handleEdit = this.handleEdit.bind(this);
     this.handleBack = this.handleBack.bind(this);
     this.handleLoadMore = this.handleLoadMore.bind(this);
+    this.findAll = this.findAll.bind(this);
 
     this.state = {
       action: Action.INITIAL,
@@ -34,17 +35,22 @@ class Loans extends React.Component {
   }
 
   componentDidMount() {
-    this.props.findAll();
+    this.findAll();
   }
 
   componentDidUpdate(prevProps) {
     const { saving, updating, fetching } = this.props;
     if (prevProps.saving && !saving) {
       this.setState({ action: Action.INITIAL });
-      this.props.findAll();
-    } if (prevProps.updating && !updating) {
+      this.findAll();
+    }
+    if (prevProps.updating && !updating) {
     } else if (!prevProps.fetching && fetching) {
     }
+  }
+
+  findAll() {
+    this.props.findAll({ active: true });
   }
 
   handleSave(record) {
@@ -59,7 +65,7 @@ class Loans extends React.Component {
         record.updatedAt = new Date().getTime();
         delete record._id;
         this.props.update(id, record);
-        record._id = id
+        record._id = id;
         break;
       default:
         break;
@@ -83,12 +89,15 @@ class Loans extends React.Component {
 
   handleBack() {
     this.props.loanSelected(null);
-    this.props.findAll();
+    this.findAll();
     this.setState({ action: Action.INITIAL });
   }
 
   handleLoadMore(pageRequest) {
-    this.props.findAll(pageRequest);
+    this.props.findAll({
+      ...pageRequest,
+      active: true,
+    });
   }
 
   render() {

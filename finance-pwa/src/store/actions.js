@@ -25,11 +25,12 @@ export const UPDATE_LOAN_START = "UPDATE_LOAN_START";
 export const UPDATE_LOAN_SUCCESS = "UPDATE_LOAN_SUCCESS";
 export const UPDATE_LOAN_FAILURE = "UPDATE_LOAN_FAILURE";
 
-export const findAllLoan = ({ page = 0, size = 10 } = {}) => {
+export const findAllLoan = ({ active, page = 0, size = 10 } = {}) => {
   return async (dispatch) => {
     try {
       dispatch(findLoansStart());
       let url = `${config.api.base}${config.api.loans.findAll}?page=${page}&size=${size}`;
+      if(active || active === false) url += `&active=${active}` 
       const { data } = await axios({
         url,
         method: "GET",

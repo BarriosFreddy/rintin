@@ -52,9 +52,16 @@ const loansRouter = () => {
     FIND_ALL,
     passport.authenticate("jwt", { session: false }),
     async (req, res, next) => {
-      const { size = 10, page = 0 } = req.query;
+      let { size = 10, page = 0, active } = req.query;
+      let query
+      if (active) {
+        active = active === 'true' || false  
+        query = {
+          active
+        }
+      }
       try {
-        const loans = await LoansService.findAll(null, { page, size });
+        const loans = await LoansService.findAll(query, { page, size });
         res.status(200).send(loans);
       } catch (error) {
         console.error(error);

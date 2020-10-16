@@ -28,7 +28,7 @@ class LoansService {
    * List loans
    */
   findAll(query, pageRequest) {
-    return mongodbLib.getAll(COLLECTION, query, pageRequest);
+    return mongodbLib.getAll(COLLECTION, { ...query, orderBy: { createdAt : -1 }}, pageRequest);
   }
 
   /**

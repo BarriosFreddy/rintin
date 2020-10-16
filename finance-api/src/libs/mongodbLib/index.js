@@ -25,9 +25,15 @@ class MongodbLib {
   }
 
   async getAll(collection, queryFields = {}, { size, page } = {}) {
+    let orderBy
+    if (queryFields && queryFields.orderBy) {
+      orderBy = queryFields.orderBy
+      delete queryFields.orderBy
+    }
     let query = this.database.collection(collection).find(queryFields);
     if (size) query = query.limit(Number(size));
     if (size && page) query = query.skip(Number(size) * Number(page));
+    if (orderBy) query = query.sort(orderBy)
     return await query.toArray();
   }
 
