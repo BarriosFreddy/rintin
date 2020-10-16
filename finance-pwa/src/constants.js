@@ -1,3 +1,3 @@
 export default Object.freeze({
-    DATE_FORMAT: 'DD-MM-YYYY'
+    DATE_FORMAT: 'dddd, DD MMMM YYYY '
 })

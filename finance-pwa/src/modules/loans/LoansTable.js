@@ -39,12 +39,10 @@ class LoansTable extends React.Component {
     this.setState({ size });
   }
 
-  calculateSumAmount(fees) {
-    return fees ? utils.formatNumber(utils.sumFees(fees)) : 0
-  }
-
-  calculateAmount({amount, percentage}) {
-    return utils.formatNumber(amount + (amount * (percentage / 100)))
+  calculateLeftAmount({amount, fees, percentage}) {
+    const totalAmount = Number(amount) + (Number(amount) * (Number(percentage) / 100))
+    const collectedAmount = fees ? utils.sumFees(fees) : 0
+    return utils.formatNumber(totalAmount - collectedAmount)
   }
 
   render() {
@@ -61,9 +59,7 @@ class LoansTable extends React.Component {
           </tr>
           <tr>
             <th>Name</th>
-            <th>Amount</th>
-            <th># Fees</th>
-            <th>Fees Amount</th>
+            <th>Left Amount</th>
             <th>Created at</th>
             <th></th>
           </tr>
@@ -72,9 +68,7 @@ class LoansTable extends React.Component {
           {records.map((record, index) => (
             <tr key={index}>
               <td>{record.debtor}</td>
-              <td>{'$' + this.calculateAmount(record)}</td>
-              <td>{(record.fees ? record.fees.length : 0)}</td>
-              <td>{'$' + this.calculateSumAmount(record.fees)}</td>
+              <td>{'$' + this.calculateLeftAmount(record)}</td>
               <td>{moment(record.createdAt).format(DATE_FORMAT)}</td>
               <td>
                 <Button

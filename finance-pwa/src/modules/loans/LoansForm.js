@@ -49,7 +49,7 @@ class LoansForm extends React.Component {
 
   render() {
     const {
-      loan: { debtor, amount, percentage, feeDefault, collect, comments },
+      loan: { debtor, amount, percentage, feeDefault, collect='Daily', comments },
     } = this.state;
     const { loading } = this.props;
     return (

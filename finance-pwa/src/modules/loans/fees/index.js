@@ -88,32 +88,34 @@ class Fees extends React.Component {
   }
 
   calculateLeftAmount({ amount, percentage, fees }) {
-    const interests = amount * (percentage / 100);
-    const sum = utils.sumFees(fees);
-    const leftAmount = amount + interests -sum
-    return utils.formatNumber(leftAmount);
+    const totalAmount = Number(amount) + (Number(amount) * (Number(percentage) / 100))
+    const collectedAmount = fees ? utils.sumFees(fees) : 0;
+    return totalAmount - collectedAmount;
   }
 
   render() {
     const { action, fee } = this.state;
     const { loan } = this.props;
     const { fees = [], active = true } = loan;
+
+    const leftAmount = this.calculateLeftAmount(loan)
     return (
       <>
         <Card>
           <Card.Header>
             <Card.Title as="h5">Fees</Card.Title>
             <span>
-              Left amount: <b>${this.calculateLeftAmount(loan)} </b>
+              Left amount: <b>${utils.formatNumber(leftAmount)} </b>
             </span>
-            <Button
-              variant="light"
-              size="sm"
-              onClick={this.handleCloseLoan}
-              disabled={!active}
-            >
-              Close Loan
-            </Button>
+            {leftAmount <= 0 && <Button
+                variant="light"
+                size="sm"
+                onClick={this.handleCloseLoan}
+                disabled={!active}
+              >
+                Close Loan
+              </Button>
+            }
             <Button
               className="pull-right"
               variant="info"
