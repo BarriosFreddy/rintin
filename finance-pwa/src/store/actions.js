@@ -1,6 +1,7 @@
 import axios from "../helpers/axios";
 import config from "../config";
 import constants from "../store/constant";
+import utils from "../utils";
 
 export const COLLAPSE_MENU = "COLLAPSE_MENU";
 export const COLLAPSE_TOGGLE = "COLLAPSE_TOGGLE";
@@ -34,6 +35,9 @@ export const findAllLoan = ({ active, page = 0, size = 10 } = {}) => {
       const { data } = await axios({
         url,
         method: "GET",
+        headers: {
+          Authorization: `Bearer ${utils.getToken()}`
+        }
       });
       dispatch(findAllLoansSuccess(data));
     } catch (error) {
@@ -49,6 +53,9 @@ export const findByIdLoan = (id) => {
       const { data } = await axios({
         url: `${config.api.base}${config.api.loans.findById}${id}`,
         method: "GET",
+        headers: {
+          Authorization: `Bearer ${utils.getToken()}`
+        }
       });
       dispatch(findByIdLoanSuccess(data));
     } catch (error) {
@@ -105,6 +112,9 @@ export const saveLoan = (loan) => {
         data: {
           ...loan,
         },
+        headers: {
+          Authorization: `Bearer ${utils.getToken()}`
+        }
       });
       dispatch(saveLoanSuccess());
     } catch (error) {
@@ -145,6 +155,9 @@ export const updateLoan = (id, loan) => {
         data: {
           ...loan,
         },
+        headers: {
+          Authorization: `Bearer ${utils.getToken()}`
+        }
       });
       dispatch(updateLoanSuccess());
     } catch (error) {
@@ -179,9 +192,13 @@ export const closeLoan = (id) => {
   return async (dispatch) => {
     try {
       dispatch(updateLoanStart());
-      await axios.get(
-        `${config.api.base}${config.api.loans.close.replace(':id', id)}`
-      );
+      await axios({
+        url: `${config.api.base}${config.api.loans.close.replace(':id', id)}`,
+        method: 'GET', 
+        headers: {
+          Authorization: `Bearer ${utils.getToken()}`
+        }
+      });
       dispatch(updateLoanSuccess());
     } catch (error) {
       dispatch(updateLoanFailure(error));
@@ -205,7 +222,6 @@ export const authenticate = (credentials) => {
           Authorization: `Basic ${credentialsdb64}`,
         },
       });
-      const tokenFragment = id_token.substring(0, 10);
       window.localStorage.setItem(constants.LOGGED_IN, id_token);
       dispatch(authSuccess());
     } catch (error) {

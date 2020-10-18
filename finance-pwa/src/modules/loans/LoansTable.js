@@ -51,13 +51,6 @@ class LoansTable extends React.Component {
       <Table responsive hover size="sm">
         <thead>
           <tr>
-            <td colSpan="100">
-              <Button variant="success" size="sm" onClick={this.handleAdd}>
-                Add
-              </Button>
-            </td>
-          </tr>
-          <tr>
             <th>Name</th>
             <th>Left Amount</th>
             <th>Created at</th>

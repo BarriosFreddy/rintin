@@ -1,7 +1,6 @@
 import React from "react";
-import { Button, Form } from "react-bootstrap";
+import { Alert, Button, Form } from "react-bootstrap";
 import Fee from "../../../models/loans/Fee";
-import moment from "moment";
 
 class FeesForm extends React.Component {
   constructor(props) {
@@ -47,6 +46,7 @@ class FeesForm extends React.Component {
     const {
       fee: { amount, comments },
     } = this.state;
+    const { showUpdatedMessage } = this.props;
     return (
       <Form>
         <Form.Group controlId="amount">
@@ -69,6 +69,9 @@ class FeesForm extends React.Component {
             onChange={this.handleChange}
           />
         </Form.Group>
+        <Alert variant="success" show={showUpdatedMessage}>
+          Record Updated
+        </Alert>
         <Button variant="success" type="button" onClick={this.handleSave}>
           SAVE
         </Button>

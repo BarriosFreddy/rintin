@@ -10,21 +10,16 @@ class FeesTable extends React.Component {
   constructor(props) {
     super(props);
     this.handleEdit = this.handleEdit.bind(this);
-    this.handleAdd = this.handleAdd.bind(this);
   }
 
   handleEdit(record) {
     this.props.onEdit(record);
   }
 
-  handleAdd() {
-    this.props.onAdd();
-  }
-
   render() {
-    let { records } = this.props
-    const fees = [...records]
-    fees.sort((a, b) => Number(b.createdAt) - Number(a.createdAt))
+    let { records } = this.props;
+    const fees = [...records];
+    fees.sort((a, b) => Number(b.createdAt) - Number(a.createdAt));
     return (
       <Table responsive hover size="sm">
         <thead>
@@ -52,16 +47,6 @@ class FeesTable extends React.Component {
               </td>
             </tr>
           ))}
-          <tr>
-            <td>
-              <Button variant="success" size="sm" onClick={this.handleAdd}>
-                Add
-              </Button>
-            </td>
-            <td />
-            <td />
-            <td />
-          </tr>
         </tbody>
       </Table>
     );

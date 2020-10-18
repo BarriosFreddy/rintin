@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Form } from "react-bootstrap";
+import { Alert, Button, Form } from "react-bootstrap";
 import Loan from "../../models/loans/Loan";
 
 class LoansForm extends React.Component {
@@ -49,9 +49,9 @@ class LoansForm extends React.Component {
 
   render() {
     const {
-      loan: { debtor, amount, percentage, feeDefault, collect='Daily', comments },
+      loan: { debtor, amount, percentage, feeDefault, collect, comments },
     } = this.state;
-    const { loading } = this.props;
+    const { loading, showUpdatedMessage } = this.props;
     return (
       <Form>
         <Form.Group controlId="debtor">
@@ -121,6 +121,9 @@ class LoansForm extends React.Component {
             onChange={this.handleChange}
           />
         </Form.Group>
+        <Alert variant="success" show={showUpdatedMessage}>
+          Record Updated
+        </Alert>
         <Button
           variant="success"
           type="button"

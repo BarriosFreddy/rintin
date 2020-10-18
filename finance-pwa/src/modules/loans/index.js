@@ -9,7 +9,7 @@ import {
 } from "../../store/actions";
 import LoansForm from "./LoansForm";
 import LoansTable from "./LoansTable";
-import { Card } from "react-bootstrap";
+import { Button, Card } from "react-bootstrap";
 import Fees from "./fees";
 const Action = {
   EDIT: "E",
@@ -31,6 +31,7 @@ class Loans extends React.Component {
 
     this.state = {
       action: Action.INITIAL,
+      showUpdatedMessage: false,
     };
   }
 
@@ -39,13 +40,13 @@ class Loans extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { saving, updating, fetching } = this.props;
+    const { saving, updating } = this.props;
     if (prevProps.saving && !saving) {
       this.setState({ action: Action.INITIAL });
       this.findAll();
     }
     if (prevProps.updating && !updating) {
-    } else if (!prevProps.fetching && fetching) {
+      this.setState({ showUpdatedMessage: true });
     }
   }
 
@@ -101,10 +102,19 @@ class Loans extends React.Component {
   }
 
   render() {
-    const { action } = this.state;
+    const { action, showUpdatedMessage } = this.state;
     const { loans, loan, saving, updating, fetching } = this.props;
     return (
       <Card>
+        <Card.Header>
+          <Card.Title as="h5">Loans</Card.Title>
+          {action === Action.INITIAL && (
+            <Button variant="success" size="sm" onClick={this.handleAdd}>
+              Add
+            </Button>
+          )}
+          {action === Action.FEE && <b>{loan.debtor}</b>}
+        </Card.Header>
         <Card.Body>
           {action === Action.INITIAL && (
             <LoansTable
@@ -112,7 +122,6 @@ class Loans extends React.Component {
               loading={fetching}
               onShow={this.handleShow}
               onEdit={this.handleEdit}
-              onAdd={this.handleAdd}
               onLoadMore={this.handleLoadMore}
             />
           )}
@@ -122,6 +131,7 @@ class Loans extends React.Component {
               loading={saving || updating}
               onSave={this.handleSave}
               onCancel={this.handleBack}
+              showUpdatedMessage={showUpdatedMessage}
             />
           )}
           {action === Action.FEE && (

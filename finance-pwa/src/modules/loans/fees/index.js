@@ -23,6 +23,7 @@ class Fees extends React.Component {
     this.state = {
       action: Action.INITIAL,
       fee: null,
+      showUpdatedMessage: false
     };
   }
 
@@ -94,7 +95,7 @@ class Fees extends React.Component {
   }
 
   render() {
-    const { action, fee } = this.state;
+    const { action, fee, showUpdatedMessage } = this.state;
     const { loan } = this.props;
     const { fees = [], active = true } = loan;
 
@@ -104,6 +105,9 @@ class Fees extends React.Component {
         <Card>
           <Card.Header>
             <Card.Title as="h5">Fees</Card.Title>
+            <Button variant="success" size="sm" onClick={this.handleAdd}>
+                Add
+              </Button>
             <span>
               Left amount: <b>${utils.formatNumber(leftAmount)} </b>
             </span>
@@ -134,7 +138,7 @@ class Fees extends React.Component {
               />
             )}
             {[Action.CREATE, Action.EDIT].includes(action) && (
-              <FeesForm fee={fee} onSave={this.handleSave} />
+              <FeesForm fee={fee} onSave={this.handleSave} showUpdatedMessage={showUpdatedMessage} />
             )}
           </Card.Body>
         </Card>
