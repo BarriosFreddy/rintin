@@ -33,6 +33,7 @@ const authRouter = () => {
             httpOnly: true,
             secure: isProd,
             maxAge: 3600000,
+            sameSite: "none"
           });
 
           res.status(200).json({
