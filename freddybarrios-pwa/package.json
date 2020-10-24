@@ -2,7 +2,7 @@
   "name": "datta-able-rv18.0.4",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://finance.freddybarrios.com",
+  "homepage": "http://freddybarrios.com",
   "dependencies": {
     "axios": "^0.20.0",
     "bootstrap": "^4.3.1",

@@ -33,6 +33,7 @@ const authRouter = () => {
             httpOnly: true,
             secure: isProd,
             maxAge: 3600000,
+            domain: 'https://freddybarrios.com'
           });
 
           res.status(200).json({

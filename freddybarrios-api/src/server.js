@@ -16,13 +16,14 @@ const { PORT } = process.env;
 
 app.use(express.json())
 
+app.enable('trust proxy')
 app.use(helmet())
 app.use(cors({
   origin: [
     'http://localhost:3000',
     'https://localhost:3000',
     'http://freddybarrios.com',
-    'https://freddybarrios.com'
+    'https://freddybarrios.com',
   ],
   credentials: true,
 }))
