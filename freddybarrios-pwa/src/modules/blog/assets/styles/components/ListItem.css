@@ -11,3 +11,12 @@
   text-decoration: none;
   color: white;
 }
+
+.item a {
+  text-decoration: none;
+  color: white;
+}
+
+.item__title {
+  color: white;
+}

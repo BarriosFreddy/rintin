@@ -1,6 +1,6 @@
-cd finance-api && yarn run start:dev
-cd finance-pwa && yarn start
-cd ../finance-pwa/ && yarn start
+cd freddybarrios-api && yarn run start:dev
+cd freddybarrios-pwa && yarn start
+cd ../freddybarrios-pwa/ && yarn start
 
 git subtree push --prefix freddybarrios-api heroku master
 
