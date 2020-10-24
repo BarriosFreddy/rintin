@@ -1,0 +1,23 @@
+.content {
+  min-height: calc(100vh - 200px);
+  padding: 0 20vw;
+  overflow-y: auto;
+  background-image: linear-gradient(#63acb0, #1d3679);
+  background-image: -webkit-linear-gradient(#63acb0, #1d3679);
+  background-image: -moz-linear-gradient(#63acb0, #1d3679);
+  background-image: -o-linear-gradient(#63acb0, #1d3679);
+}
+
+.content__item {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  flex-grow: 1;
+}
+
+@media only screen and (max-width: 420px) {
+  .content {
+    padding: 0 5vw;
+  }
+}

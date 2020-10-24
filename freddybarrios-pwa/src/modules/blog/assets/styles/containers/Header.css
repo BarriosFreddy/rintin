@@ -1,0 +1,50 @@
+.header {
+  height: 100px;
+  padding: 0 20vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  background-color: #63acb0;
+}
+
+.header__home {
+  margin: 20px 0 5px 0;
+}
+
+.header__home a {
+  font-size: 20px;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+}
+
+.header__nav {
+  margin-bottom: 20px;
+  display: inline-block;
+}
+
+.header__nav a {
+  text-decoration: none;
+  margin: 0 15px;
+  color: white;
+  font-weight: bold;
+}
+
+.header__nav a:first-child {
+  margin: 0 15px 0 0;
+}
+
+@media only screen and (max-width: 420px) {
+  .header {
+    padding: 0 5vw;
+  }
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,25 @@
+.footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 100px;
+  background-color: #1d3679;
+  font-size: 14px;
+  padding: 0px 20vw;
+}
+
+.footer__nav {
+  display: inline-block;
+}
+
+.footer__nav a {
+  text-decoration: none;
+  margin: 0 10px;
+  color: white;
+}
+
+@media only screen and (max-width: 420px) {
+  .footer {
+    padding: 0 5vw;
+  }
+}
