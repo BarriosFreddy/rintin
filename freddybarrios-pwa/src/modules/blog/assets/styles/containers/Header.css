@@ -9,12 +9,15 @@
 
 .header__home {
   margin: 20px 0 5px 0;
+  display: flex;
+  flex-direction: row;
 }
 
 .header__home a h1 {
   text-decoration: none;
   color: white;
   font-weight: bold;
+  margin-left: 20px;
 }
 
 .header__nav {

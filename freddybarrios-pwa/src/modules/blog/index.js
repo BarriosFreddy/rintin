@@ -1,17 +1,22 @@
 import React from "react";
 import Layout from "./components/Layout";
 import Home from "./containers/Home";
+import Post from "./containers/Post";
 import NotFound from "./containers/NotFound";
 import { Route, Switch } from "react-router-dom";
 
 
-const Blog = () => (
+const Blog = ({match}) => {
+  console.log({match});
+  return (
   <Layout>
     <Switch>
       <Route exact path="/" component={Home} />
+      <Route exact path={`${match.path}/post`} component={Post} />
       <Route component={NotFound} />
     </Switch>
   </Layout>
-);
+)
+}
 
 export default Blog;

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const ListItem = () => (
   <section className="item">
-    <Link to={`/post/${1}`}>
+    <Link to={`blog/post`}>
       <h3 className="item__title">An awesome headline about some topic</h3>
       <div>{moment().format("LL")}</div>
       <div className="item__description">Description about the article...</div>

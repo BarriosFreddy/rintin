@@ -13,6 +13,8 @@ import Aux from "../../../hoc/_Aux";
 import * as actionTypes from "../../../store/actions";
 
 import Blog from "../../../modules/blog";
+import Post from "../../../modules/blog/containers/Post";
+
 
 import "./app.scss";
 
