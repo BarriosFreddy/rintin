@@ -7,12 +7,11 @@ import { Route, Switch } from "react-router-dom";
 
 
 const Blog = ({match}) => {
-  console.log({match});
   return (
   <Layout>
     <Switch>
-      <Route exact path="/" component={Home} />
-      <Route exact path={`${match.path}/post`} component={Post} />
+      <Route exact path={`${match.path}/`} component={Home} />
+      <Route path={`${match.path}/post/:id`} component={Post} />
       <Route component={NotFound} />
     </Switch>
   </Layout>

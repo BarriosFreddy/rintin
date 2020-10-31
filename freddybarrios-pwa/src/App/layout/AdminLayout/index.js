@@ -13,7 +13,6 @@ import Aux from "../../../hoc/_Aux";
 import * as actionTypes from "../../../store/actions";
 
 import Blog from "../../../modules/blog";
-import Post from "../../../modules/blog/containers/Post";
 
 
 import "./app.scss";
@@ -71,7 +70,7 @@ class AdminLayout extends Component {
       return route.component ? (
         <Route
           key={index}
-          path={route.path}
+          path={`${this.props.match.path}/${route.path}`}
           exact={route.exact}
           name={route.name}
           render={(props) => {
@@ -85,7 +84,7 @@ class AdminLayout extends Component {
       ) : null;
     });
 
-    return loggedIn ? (
+    return (
       <Aux>
         <Fullscreen enabled={this.props.isFullScreen}>
           <Navigation />
@@ -103,19 +102,6 @@ class AdminLayout extends Component {
                       <Suspense fallback={<Loader />}>
                         <Switch>
                           {menu}
-                          <Route
-                            path="/blog"
-                            exact={true}
-                            name="Blog"
-                            component={Blog}
-                          ></Route>
-                          <Route
-                            path="/"
-                            exact={true}
-                            name="Blog"
-                            component={Blog}
-                          ></Route>
-                          <Redirect from="/" to="/blog" />
                         </Switch>
                       </Suspense>
                     </div>
@@ -126,12 +112,6 @@ class AdminLayout extends Component {
           </div>
         </Fullscreen>
       </Aux>
-    ) : (
-      <Switch>
-        <Route path="/blog" exact={true} name="Blog" component={Blog}></Route>
-        <Route path="/" exact={true} name="Blog" component={Blog}></Route>
-        <Redirect from="/" to="/blog" />
-      </Switch>
     );
   }
 }

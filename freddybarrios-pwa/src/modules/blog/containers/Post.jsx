@@ -1,6 +1,7 @@
 import React from "react";
 
-const Post = () => (
+const Post = ({match: {params}}) => {
+  return (
   <section className="post">
     <h1>An awesome headline about some topic</h1>
     <h4>Description about the article...</h4>
@@ -23,5 +24,6 @@ const Post = () => (
     </p>
   </section>
 );
+  }
 
 export default Post;

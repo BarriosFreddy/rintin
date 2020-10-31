@@ -3,11 +3,10 @@ import "../assets/styles/containers/Home.css";
 import ListItem from "../components/ListItem";
 
 const Home = ({match}) => {
- console.log({match});
   return (
   <section className="home">
-    <ListItem />
-    <ListItem />
+    <ListItem link={`${match.path}post/123-title`} />
+    <ListItem link={`${match.path}post/123-title-2`}/>
   </section>
 )};
 
