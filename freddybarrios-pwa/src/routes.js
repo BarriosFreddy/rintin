@@ -8,7 +8,7 @@ global.jQuery = $;
 const Loans = React.lazy(() => import('./modules/loans'));
 const DashboardDefault = React.lazy(() => import('./Demo/Dashboard/Default'));
 
-const UIBasicButton = React.lazy(() => import('./Demo/UIElements/Basic/Button'));
+/* const UIBasicButton = React.lazy(() => import('./Demo/UIElements/Basic/Button'));
 const UIBasicBadges = React.lazy(() => import('./Demo/UIElements/Basic/Badges'));
 const UIBasicBreadcrumbPagination = React.lazy(() => import('./Demo/UIElements/Basic/BreadcrumbPagination'));
 
@@ -25,12 +25,12 @@ const Nvd3Chart = React.lazy(() => import('./Demo/Charts/Nvd3Chart/index'));
 const GoogleMap = React.lazy(() => import('./Demo/Maps/GoogleMap/index'));
 
 const OtherSamplePage = React.lazy(() => import('./Demo/Other/SamplePage'));
-const OtherDocs = React.lazy(() => import('./Demo/Other/Docs'));
+const OtherDocs = React.lazy(() => import('./Demo/Other/Docs')); */
 
 const routes = [
     { path: '/loans', exact: true, name: 'Loans', component: Loans },
-    { path: '/dashboard/default', exact: true, name: 'Default', component: DashboardDefault },
-    { path: '/basic/button', exact: true, name: 'Basic Button', component: UIBasicButton },
+    { path: '/dashboard', exact: true, name: 'Default', component: DashboardDefault },
+/*     { path: '/basic/button', exact: true, name: 'Basic Button', component: UIBasicButton },
     { path: '/basic/badges', exact: true, name: 'Basic Badges', component: UIBasicBadges },
     { path: '/basic/breadcrumb-paging', exact: true, name: 'Basic Breadcrumb Pagination', component: UIBasicBreadcrumbPagination },
     { path: '/basic/collapse', exact: true, name: 'Basic Collapse', component: UIBasicCollapse },
@@ -41,7 +41,7 @@ const routes = [
     { path: '/charts/nvd3', exact: true, name: 'Nvd3 Chart', component: Nvd3Chart },
     { path: '/maps/google-map', exact: true, name: 'Google Map', component: GoogleMap },
     { path: '/sample-page', exact: true, name: 'Sample Page', component: OtherSamplePage },
-    { path: '/docs', exact: true, name: 'Documentation', component: OtherDocs },
+    { path: '/docs', exact: true, name: 'Documentation', component: OtherDocs }, */
 ];
 
 export default routes;

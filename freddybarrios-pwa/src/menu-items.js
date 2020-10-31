@@ -7,21 +7,21 @@ export default {
             icon: 'icon-navigation',
             children: [
                 {
-                    id: 'loans',
-                    title: 'Loans',
-                    type: 'item',
-                    url: '/loans',
-                    icon: 'feather icon-home',
-                },
-                {
                     id: 'dashboard',
                     title: 'Dashboard',
                     type: 'item',
-                    url: '/dashboard/default',
+                    url: '/app/dashboard',
                     icon: 'feather icon-home',
-                }
+                },
+                {
+                    id: 'loans',
+                    title: 'Loans',
+                    type: 'item',
+                    url: '/app/loans',
+                    icon: 'feather icon-box',
+                },
             ]
-        },
+        }/* ,
         {
             id: 'ui-element',
             title: 'UI ELEMENT',
@@ -223,7 +223,7 @@ export default {
                     classes: 'nav-item disabled',
                     icon: 'feather icon-power'
                 },
-                /*{
+                {
                     id: 'buy-now',
                     title: 'Buy Now',
                     type: 'item',
@@ -236,8 +236,8 @@ export default {
                         title: 'v1.0',
                         type: 'label-primary'
                     }
-                }*/
+                }
             ]
-        }
+        } */
     ]
 }

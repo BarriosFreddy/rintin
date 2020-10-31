@@ -7,6 +7,7 @@ class FeesForm extends React.Component {
     super(props);
     this.handleSave = this.handleSave.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
     const fee = props.fee || new Fee();
     this.state = {
       fee,
@@ -21,6 +22,10 @@ class FeesForm extends React.Component {
       };
       this.props.onSave(feeToSave);
     }
+  }
+
+  handleCancel() {
+    this.props.onCancel()
   }
 
   validateForm() {
@@ -74,6 +79,9 @@ class FeesForm extends React.Component {
         </Alert>
         <Button variant="success" type="button" onClick={this.handleSave}>
           SAVE
+        </Button>
+        <Button type="button" onClick={this.handleCancel}>
+          CANCEL
         </Button>
       </Form>
     );

@@ -1,4 +1,5 @@
 import React from "react";
+import "./assets/styles/loans.css"
 import { Table, Button } from "react-bootstrap";
 import moment from "moment";
 import contants from "../../constants";
@@ -39,10 +40,11 @@ class LoansTable extends React.Component {
     this.setState({ size });
   }
 
-  calculateLeftAmount({amount, fees, percentage}) {
-    const totalAmount = Number(amount) + (Number(amount) * (Number(percentage) / 100))
-    const collectedAmount = fees ? utils.sumFees(fees) : 0
-    return utils.formatNumber(totalAmount - collectedAmount)
+  calculateLeftAmount({ amount, fees, percentage }) {
+    const totalAmount =
+      Number(amount) + Number(amount) * (Number(percentage) / 100);
+    const collectedAmount = fees ? utils.sumFees(fees) : 0;
+    return utils.formatNumber(totalAmount - collectedAmount);
   }
 
   render() {
@@ -54,31 +56,18 @@ class LoansTable extends React.Component {
             <th>Name</th>
             <th>Left Amount</th>
             <th>Created at</th>
-            <th></th>
           </tr>
         </thead>
         <tbody>
           {records.map((record, index) => (
-            <tr key={index}>
+            <tr
+              className="pointer"
+              key={index}
+              onClick={() => this.handleShow(record)}
+            >
               <td>{record.debtor}</td>
-              <td>{'$' + this.calculateLeftAmount(record)}</td>
+              <td>{"$" + this.calculateLeftAmount(record)}</td>
               <td>{moment(record.createdAt).format(DATE_FORMAT)}</td>
-              <td>
-                <Button
-                  variant="link"
-                  size="sm"
-                  onClick={() => this.handleShow(record)}
-                >
-                  Show
-                </Button>
-                <Button
-                  variant="link"
-                  size="sm"
-                  onClick={() => this.handleEdit(record)}
-                >
-                  Edit
-                </Button>
-              </td>
             </tr>
           ))}
           <tr>

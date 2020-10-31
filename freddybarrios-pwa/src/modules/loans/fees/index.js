@@ -18,7 +18,7 @@ class Fees extends React.Component {
     this.handleAdd = this.handleAdd.bind(this);
     this.handleSave = this.handleSave.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
-    this.handleBack = this.handleBack.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
     this.handleCloseLoan = this.handleCloseLoan.bind(this);
     this.state = {
       action: Action.INITIAL,
@@ -73,12 +73,12 @@ class Fees extends React.Component {
     this.setState({ action: Action.EDIT, fee: record });
   }
 
-  handleAdd() {
-    this.setState({ action: Action.CREATE });
+  handleCancel() {
+    this.setState({ action: Action.INITIAL });    
   }
 
-  handleBack() {
-    this.props.onBack();
+  handleAdd() {
+    this.setState({ action: Action.CREATE });
   }
 
   handleCloseLoan() {
@@ -120,14 +120,6 @@ class Fees extends React.Component {
                 Close Loan
               </Button>
             }
-            <Button
-              className="pull-right"
-              variant="info"
-              size="sm"
-              onClick={this.handleBack}
-            >
-              Back
-            </Button>
           </Card.Header>
           <Card.Body>
             {action === Action.INITIAL && (
@@ -138,7 +130,7 @@ class Fees extends React.Component {
               />
             )}
             {[Action.CREATE, Action.EDIT].includes(action) && (
-              <FeesForm fee={fee} onSave={this.handleSave} showUpdatedMessage={showUpdatedMessage} />
+              <FeesForm fee={fee} onSave={this.handleSave} onCancel={this.handleCancel} showUpdatedMessage={showUpdatedMessage} />
             )}
           </Card.Body>
         </Card>

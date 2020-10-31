@@ -20,7 +20,7 @@ class SignUp1 extends React.Component {
   componentDidUpdate(prevProps) {
     const { authenticating, loggedIn } = this.props;
     if (prevProps.authenticating && !authenticating && loggedIn) {
-      this.props.history.push("/dashboard/default");
+      this.props.history.push("/app/dashboard");
     } else if (!authenticating && !loggedIn) {
     }
   }

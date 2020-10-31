@@ -8,8 +8,6 @@ import Loader from './layout/Loader'
 import Aux from "../hoc/_Aux";
 import ScrollToTop from './layout/ScrollToTop';
 import routes from "../route";
-import Blog from '../modules/blog';
-import Post from '../modules/blog/containers/Post';
 import NotFound from '../modules/blog/containers/NotFound';
 
 const AdminLayout = Loadable({
@@ -17,10 +15,13 @@ const AdminLayout = Loadable({
     loading: Loader
 });
 
+const BlogLayout = Loadable({
+    loader: () => import('../modules/blog'),
+    loading: Loader
+});
+
+
 class App extends Component {
-    constructor(props){
-        super(props)
-    }
     render() {
         const menu = routes.map((route, index) => {
           return (route.component) ? (
@@ -44,8 +45,8 @@ class App extends Component {
                     <Suspense fallback={<Loader/>}>
                         <Switch>
                             {menu}
-                            <Route exact path="/app"  component={AdminLayout} />
-                            <Route path="/blog" component={Blog}/>
+                            <Route path="/app"  component={AdminLayout} />
+                            <Route path="/blog" component={BlogLayout}/>
                             <Redirect from="/" to="blog"/>
                             <Route component={NotFound} />
                         </Switch>

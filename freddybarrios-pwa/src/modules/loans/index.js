@@ -25,7 +25,8 @@ class Loans extends React.Component {
     this.handleSave = this.handleSave.bind(this);
     this.handleShow = this.handleShow.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
-    this.handleBack = this.handleBack.bind(this);
+    this.handleBackEdit = this.handleBackEdit.bind(this);
+    this.handleBackFee = this.handleBackFee.bind(this);
     this.handleLoadMore = this.handleLoadMore.bind(this);
     this.findAll = this.findAll.bind(this);
 
@@ -88,10 +89,14 @@ class Loans extends React.Component {
     this.setState({ action: Action.CREATE });
   }
 
-  handleBack() {
+  handleBackFee() {
     this.props.loanSelected(null);
     this.findAll();
     this.setState({ action: Action.INITIAL });
+  }
+  
+  handleBackEdit() {
+    this.setState({ action: Action.FEE });
   }
 
   handleLoadMore(pageRequest) {
@@ -113,7 +118,26 @@ class Loans extends React.Component {
               Add
             </Button>
           )}
-          {action === Action.FEE && <b>{loan.debtor}</b>}
+          {action === Action.FEE && (
+            <>
+              <h6>{loan.debtor}  </h6>
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={() => this.handleEdit(loan)}
+              >
+                Edit
+              </Button>
+            </>
+          )}
+           <Button
+              className="pull-right"
+              variant="info"
+              size="sm"
+              onClick={this.handleBackFee}
+            >
+              Back
+            </Button>
         </Card.Header>
         <Card.Body>
           {action === Action.INITIAL && (
@@ -130,12 +154,12 @@ class Loans extends React.Component {
               loan={loan}
               loading={saving || updating}
               onSave={this.handleSave}
-              onCancel={this.handleBack}
+              onCancel={this.handleBackEdit}
               showUpdatedMessage={showUpdatedMessage}
             />
           )}
           {action === Action.FEE && (
-            <Fees loan={loan} onBack={this.handleBack} />
+            <Fees loan={loan}/>
           )}
         </Card.Body>
       </Card>

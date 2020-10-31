@@ -12,9 +12,6 @@ import routes from "../../../routes";
 import Aux from "../../../hoc/_Aux";
 import * as actionTypes from "../../../store/actions";
 
-import Blog from "../../../modules/blog";
-
-
 import "./app.scss";
 
 class AdminLayout extends Component {
@@ -54,6 +51,7 @@ class AdminLayout extends Component {
   }
 
   render() {
+    const { path } = this.props.match
     /* full screen exit call */
     document.addEventListener("fullscreenchange", this.fullScreenExitHandler);
     document.addEventListener(
@@ -65,12 +63,13 @@ class AdminLayout extends Component {
       this.fullScreenExitHandler
     );
     document.addEventListener("MSFullscreenChange", this.fullScreenExitHandler);
+      console.log({path});
     const { loggedIn } = this.props;
     const menu = routes.map((route, index) => {
       return route.component ? (
         <Route
           key={index}
-          path={`${this.props.match.path}/${route.path}`}
+          path={`${path}${route.path}`}
           exact={route.exact}
           name={route.name}
           render={(props) => {

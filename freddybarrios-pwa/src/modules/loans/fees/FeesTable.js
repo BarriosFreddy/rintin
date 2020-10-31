@@ -1,5 +1,5 @@
 import React from "react";
-import { Table, Button } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 import moment from "moment";
 import constants from "../../../constants";
 import utils from "../../../utils";
@@ -32,19 +32,14 @@ class FeesTable extends React.Component {
         </thead>
         <tbody>
           {fees.map((fee, index) => (
-            <tr key={index}>
+            <tr
+              className="pointer"
+              key={index}
+              onClick={() => this.handleEdit(fee)}
+            >
               <td>{index + 1}</td>
               <td>{`$${utils.formatNumber(fee.amount)}`}</td>
               <td>{moment(Number(fee.createdAt)).format(DATE_FORMAT)}</td>
-              <td>
-                <Button
-                  variant="link"
-                  size="sm"
-                  onClick={() => this.handleEdit(fee)}
-                >
-                  Edit
-                </Button>
-              </td>
             </tr>
           ))}
         </tbody>
