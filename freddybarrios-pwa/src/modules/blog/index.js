@@ -1,4 +1,5 @@
 import React from "react";
+import '../../assets/scss/style.scss';
 import Layout from "./components/Layout";
 import Home from "./containers/Home";
 import Post from "./containers/Post";

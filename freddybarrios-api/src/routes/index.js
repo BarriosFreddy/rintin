@@ -4,6 +4,7 @@ const accountsRouter = require("./core/accountsRouter");
 const applicationSettingsRouter = require("./core/applicationSettingsRouter");
 const rolesRouter = require("./core/rolesRouter");
 const typificationsRouter = require("./core/typificationsRouter");
+const postsRouter = require("./blog/posts");
 
 const loansRouter = require("./loans");
 
@@ -16,13 +17,14 @@ const {
     ROLES,
     TYPIFICATIONS,
     LOANS,
+    POSTS,
   }
 } = require("../constants");
 
 const routes = (app) => {
   app.get("/", (req, res) => {
     const infoAPI = {
-      appName: "App Name ",
+      appName: "Freddy Barrios",
       version: "v1.0.0",
     };
     res.send(infoAPI);
@@ -36,6 +38,7 @@ const routes = (app) => {
   app.use(TYPIFICATIONS.URI, typificationsRouter());
 
   app.use(LOANS.URI, loansRouter());
+  app.use(POSTS.URI, postsRouter());
 };
 
 module.exports = routes;

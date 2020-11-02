@@ -36,9 +36,6 @@ class App extends Component {
           ) : (null);
         });
 
-        const {match} = this.props
-        console.log({match});
-
         return (
             <Aux>
                 <ScrollToTop>

@@ -13,6 +13,7 @@ export const NAV_COLLAPSE_LEAVE = "NAV_COLLAPSE_LEAVE";
 
 export const LOAN_TYPE = "LOAN_TYPE";
 export const AUTH_TYPE = "AUTH_TYPE";
+export const POST_TYPE = "POST_TYPE";
 
 export const FETCH_LOAN_START = "FETCH_LOAN_START";
 export const FETCH_LOAN_SUCCESS = "FETCH_LOAN_SUCCESS";
@@ -259,3 +260,47 @@ export const logout = () => {
     }
   };
 };
+
+export const findAllPosts = ({ publish, page = 0, size = 10 } = {}) => {
+  return async (dispatch) => {
+    try {
+      dispatch(findPostsStart());
+      let url = `${config.api.base}${config.api.posts.findAll}?page=${page}&size=${size}`;
+      if(publish || publish === false) url += `&publish=${publish}` 
+      const { data } = await axios({
+        url,
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Basic ${config.api.apiToken}`,
+        },
+      });
+      dispatch(findAllPostsSuccess(data));
+    } catch (error) {
+      dispatch(findPostsFailure(error));
+    }
+  };
+};
+
+export const findPostsStart = () => ({
+  type: POST_TYPE,
+  payload: {
+    fetching: true,
+  },
+});
+
+export const findAllPostsSuccess = (posts) => ({
+  type: POST_TYPE,
+  payload: {
+    fetching: false,
+    posts,
+  },
+});
+
+export const findPostsFailure = (error) => ({
+  type: POST_TYPE,
+  payload: {
+    fetching: false,
+    error,
+  },
+});

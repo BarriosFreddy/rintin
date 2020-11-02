@@ -7,9 +7,9 @@ const canReadSchema = joi.boolean();
 const canWriteSchema = joi.boolean();
 const canDeleteSchema = joi.boolean();
 
-const roleIdSchema = {
+const roleIdSchema = joi.object().keys({
   id: idSchema.required(),
-};
+});
 
 const roleCreateSchema = joi.object().keys({
   name: nameSchema.required(),

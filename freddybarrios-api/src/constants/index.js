@@ -37,5 +37,9 @@ module.exports = Object.freeze({
       ...GENERIC_ENDPOINTS,
       CLOSE: "/:id/close"
     },
+    POSTS: {
+      URI: "/posts",
+      ...GENERIC_ENDPOINTS,
+    }
   },
 });

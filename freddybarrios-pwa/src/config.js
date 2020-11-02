@@ -23,8 +23,9 @@ export default {
     layout6Background : 'linear-gradient(to right, #A445B2 0%, #D41872 52%, #FF0066 100%)', // used only for pre-layout = layout-6
     layout6BackSize : '', // used only for pre-layout = layout-6
     api: {
-        base: 'https://freddybarrios.herokuapp.com',
-        //base: 'http://localhost:3001',
+        //base: 'https://freddybarrios.herokuapp.com',
+        base: 'http://localhost:3001',
+        apiToken: 'dXNlcm5hbWU6cGFzc3dvcmQ=',
         auth: {
             authenticate: '/auth/authenticate',
             logout: '/auth/logout',
@@ -40,6 +41,9 @@ export default {
             update: '/loans/',
             close: '/loans/:id/close'
         },
+        posts: {
+            findAll: '/posts',
+        }
 
     }
 };
