@@ -6,35 +6,6 @@ import gfm from "remark-gfm";
 import { connect } from "react-redux";
 import { findPostById } from "../../../store/actions";
 
-const content = `# An awesome headline about some topic
-
-## Description
-
---- 
-
-* Item
-
-* [x] check
-
-A paragraph with *emphasis* and **strong importance**.
-
-> A block quote with ~strikethrough~ and a URL: https://reactjs.org.
-
-* Lists
-* [ ] todo
-* [x]  done
-
-A table:
-
-| a | b |
-| - | - |
-
-\\\
-// Some code
-
-var x = 1;
-\\\
-`;
 class Post extends React.Component {
 
   componentDidMount() {
@@ -42,15 +13,14 @@ class Post extends React.Component {
     this.props.findPostById(id);
   }
   render() {
-    const { post: { title, content } ={} } = this.props;
+    const { post: { title, body_markdown } ={} } = this.props;
 
-    return content ?
+    return title ?
       <section className="post">
-        <h2>{title}</h2>
-        {snarkdown(content)}
-        {console.log(snarkdown(content))}
+        <h1 className='post__title'>{title}</h1>
+        <ReactMarkdown plugins={[gfm]} children={body_markdown}></ReactMarkdown>
       </section>
-     : <h1>Loading...</h1>;
+     : <h1 className='post__loading'>Loading...</h1>;
   }
 }
 const mapStateToProps = (state) => {

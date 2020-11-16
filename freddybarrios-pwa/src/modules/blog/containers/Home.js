@@ -12,13 +12,10 @@ class Home extends React.Component {
 
   render() {
     const { match, posts } = this.props;
-    console.log({posts});
     return (
       <section className="home">
         {!posts && <h1>LOADING...</h1>}
-        {posts && posts.map(post => <ListItem key={post._id} {...post} link={`${match.path}post/${post._id}`} />)}
-       {/*  <ListItem link={`${match.path}post/123-title`} />
-        <ListItem link={`${match.path}post/123-title-2`} /> */}
+        {posts && posts.map(post => <ListItem key={post.id} {...post} link={`${match.path}post/${post.id}`} />)}
       </section>
     );
   }

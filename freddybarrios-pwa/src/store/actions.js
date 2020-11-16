@@ -261,19 +261,20 @@ export const logout = () => {
   };
 };
 
-export const findAllPosts = ({ publish, page = 0, size = 10 } = {}) => {
+export const findAllPosts = ({ page = 0, size = 10 } = {}) => {
   return async (dispatch) => {
     try {
       dispatch(findPostsStart());
-      let url = `${config.api.base}${config.api.posts.findAll}?page=${page}&size=${size}`;
-      if(publish || publish === false) url += `&publish=${publish}` 
+      const username = config.api.usernameDevTo
+      let url = `${config.api.baseDevTo}${config.api.articles.findAll}`;
       const { data } = await axios({
         url,
         method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Basic ${config.api.apiToken}`,
+        params: {
+          username,
+          page
         },
+        withCredentials: false
       });
       dispatch(findAllPostsSuccess(data));
     } catch (error) {
@@ -287,14 +288,11 @@ export const findPostById = (id) => {
   return async (dispatch) => {
     try {
       dispatch(findPostsStart());
-      let url = `${config.api.base}${config.api.posts.findPostById}${id}`;
+      let url = `${config.api.baseDevTo}${config.api.articles.findPostById}${id}`;
       const { data } = await axios({
         url,
         method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Basic ${config.api.apiToken}`,
-        },
+        withCredentials: false
       });
       dispatch(findPostByIdSuccess(data));
     } catch (error) {
