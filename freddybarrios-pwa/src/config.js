@@ -43,6 +43,7 @@ export default {
         },
         posts: {
             findAll: '/posts',
+            findPostById:'/posts/',
         }
 
     }

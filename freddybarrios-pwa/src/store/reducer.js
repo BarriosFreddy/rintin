@@ -17,6 +17,9 @@ const initialState = {
   auth: {
     authenticating: false,
     loggedIn: !!(localStorage.getItem(constants.LOGGED_IN)),
+  },
+  posts: {
+    posts: [],
   }
 };
 

@@ -1,0 +1,37 @@
+import React from "react";
+import { connect } from "react-redux";
+import { findAllPosts } from "../../../store/actions";
+import "../assets/styles/containers/Home.css";
+import ListItem from "../components/ListItem";
+
+class Home extends React.Component {
+
+  componentDidMount() {
+    this.props.findAll()
+  }
+
+  render() {
+    const { match, posts } = this.props;
+    console.log({posts});
+    return (
+      <section className="home">
+        {!posts && <h1>LOADING...</h1>}
+        {posts && posts.map(post => <ListItem key={post._id} {...post} link={`${match.path}post/${post._id}`} />)}
+       {/*  <ListItem link={`${match.path}post/123-title`} />
+        <ListItem link={`${match.path}post/123-title-2`} /> */}
+      </section>
+    );
+  }
+}
+const mapStateToProps = (state) => {
+  const { posts } = state.posts;
+  return {
+    posts,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  findAll: (pageSize) => dispatch(findAllPosts(pageSize)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

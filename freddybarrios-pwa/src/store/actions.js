@@ -282,6 +282,28 @@ export const findAllPosts = ({ publish, page = 0, size = 10 } = {}) => {
   };
 };
 
+
+export const findPostById = (id) => {
+  return async (dispatch) => {
+    try {
+      dispatch(findPostsStart());
+      let url = `${config.api.base}${config.api.posts.findPostById}${id}`;
+      const { data } = await axios({
+        url,
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Basic ${config.api.apiToken}`,
+        },
+      });
+      dispatch(findPostByIdSuccess(data));
+    } catch (error) {
+      dispatch(findPostsFailure(error));
+    }
+  };
+};
+
+
 export const findPostsStart = () => ({
   type: POST_TYPE,
   payload: {
@@ -294,6 +316,14 @@ export const findAllPostsSuccess = (posts) => ({
   payload: {
     fetching: false,
     posts,
+  },
+});
+
+export const findPostByIdSuccess = (post) => ({
+  type: POST_TYPE,
+  payload: {
+    fetching: false,
+    post,
   },
 });
 
