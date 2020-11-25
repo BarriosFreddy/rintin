@@ -18,19 +18,19 @@
   color: white;
 }
 
-@media only screen and (max-width: 421px) {
+@media only screen and (max-width: 420px) {
   .footer {
     padding: 0 5vw;
   }
 }
 
-@media only screen and (max-width: 769px) {
+@media only screen and (min-width: 421px) and (max-width: 768px) {
   .footer {
     padding: 0 10vw;
   }
 }
 
-@media only screen and (max-width: 1025px) {
+@media only screen and (min-width: 769px) and (max-width: 1025px) {
   .footer {
     padding: 0 15vw;
   }

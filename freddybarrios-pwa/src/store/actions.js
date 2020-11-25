@@ -287,7 +287,7 @@ export const findAllPosts = ({ page = 0, size = 10 } = {}) => {
 export const findPostById = (id) => {
   return async (dispatch) => {
     try {
-      dispatch(findPostsStart());
+      dispatch(findPostByIdStart());
       let url = `${config.api.baseDevTo}${config.api.articles.findPostById}${id}`;
       const { data } = await axios({
         url,
@@ -314,6 +314,14 @@ export const findAllPostsSuccess = (posts) => ({
   payload: {
     fetching: false,
     posts,
+  },
+});
+
+export const findPostByIdStart = () => ({
+  type: POST_TYPE,
+  payload: {
+    fetching: true,
+    post: {},
   },
 });
 

@@ -27,8 +27,7 @@
     "react-window-size": "^1.2.2",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
-    "remark-gfm": "^1.0.0",
-    "snarkdown": "^2.0.0"
+    "remark-gfm": "^1.0.0"
   },
   "scripts": {
     "start": "react-scripts start",

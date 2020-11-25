@@ -1,32 +1,49 @@
 import React from "react";
 import "../assets/styles/containers/Post.css";
-import snarkdown from "snarkdown";
 import ReactMarkdown from "react-markdown";
 import gfm from "remark-gfm";
 import { connect } from "react-redux";
 import { findPostById } from "../../../store/actions";
 
 class Post extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: false,
+    };
+  }
 
   componentDidMount() {
-    const { match: { params: { id } } } = this.props;
+    const { id } = this.props.match.params;
     this.props.findPostById(id);
+    this.setState({ loading: true });
   }
-  render() {
-    const { post: { title, body_markdown } ={} } = this.props;
 
-    return title ?
+  componentWillUpdate(prevProps) {
+    const { fetching } = this.props;
+    if (prevProps.fetching && !fetching) {
+      this.setState({ loading: false });
+    }
+  }
+
+  render() {
+    const { title, body_markdown } = this.props.post || {};
+    const { loading } = this.state;
+    return loading ? (
+      <h1 className="post__loading">Loading...</h1>
+    ) : (
       <section className="post">
-        <h1 className='post__title'>{title}</h1>
+        <h1 className="post__title">{title}</h1>
         <ReactMarkdown plugins={[gfm]} children={body_markdown}></ReactMarkdown>
       </section>
-     : <h1 className='post__loading'>Loading...</h1>;
+    );
   }
 }
 const mapStateToProps = (state) => {
-  const { post } = state.posts;
+  const { post, fetching } = state.posts;
   return {
-    post
+    post,
+    fetching,
   };
 };
 
