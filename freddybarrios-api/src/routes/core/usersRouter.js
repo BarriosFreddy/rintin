@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const passport = require("passport");
-const { RESOURCES } = require("../../constants");
+const { RESOURCES } = require("../../../constants");
 const UserService = require("../../services/UserService");
 const validationHandler = require("../../middlewares/validationHandler");
 const {

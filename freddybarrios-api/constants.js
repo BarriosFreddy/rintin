@@ -7,6 +7,7 @@ const GENERIC_ENDPOINTS = {
 };
 
 module.exports = Object.freeze({
+  API_TOKEN: "dXNlcm5hbWU6cGFzc3dvcmQ=",
   RESOURCES: {
     AUTH: {
       URI: "/auth",

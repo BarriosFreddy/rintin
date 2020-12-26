@@ -2,7 +2,7 @@ const router = require("express").Router();
 const passport = require("passport");
 const boom = require("@hapi/boom");
 const jwt = require("jsonwebtoken");
-const { AUTH } = require("../../constants").RESOURCES;
+const { AUTH } = require("../../../constants").RESOURCES;
 const { AUTH_JWT_SECRET, ENV = "dev" } = process.env;
 
 const isProd = ENV === "prod";

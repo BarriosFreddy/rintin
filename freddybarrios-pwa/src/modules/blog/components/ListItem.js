@@ -4,7 +4,7 @@ import moment from "moment";
 import { Link } from "react-router-dom";
 import { Col, Container, Row } from "react-bootstrap";
 
-const ListItem = ({ link, title, description, created_at }) => (
+const ListItem = ({ link, title, description, published_at }) => (
   <section className="item">
     <Link to={link}>
       <Container>
@@ -14,7 +14,7 @@ const ListItem = ({ link, title, description, created_at }) => (
             <div className="item__description">{description}</div>
           </Col>
           <Col xs="6" md="4">
-            <div className="pull-right">{moment(created_at).format("LL")}</div>
+            <div className="pull-right">{moment(published_at).format("LL")}</div>
           </Col>
         </Row>
       </Container>

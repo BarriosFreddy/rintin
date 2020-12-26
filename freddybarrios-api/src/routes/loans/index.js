@@ -1,4 +1,4 @@
-const { RESOURCES } = require("../../constants");
+const { RESOURCES } = require("../../../constants");
 const passport = require("passport");
 const validationHandler = require("../../middlewares/validationHandler");
 const LoansService = require("../../services/loans/loans.service");

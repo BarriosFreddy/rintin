@@ -19,7 +19,7 @@ const {
     LOANS,
     POSTS,
   }
-} = require("../constants");
+} = require("../../constants");
 
 const routes = (app) => {
   app.get("/", (req, res) => {
