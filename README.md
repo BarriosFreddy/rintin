@@ -5,4 +5,4 @@ cd ../freddybarrios-pwa/ && yarn start
 git subtree push --prefix freddybarrios-api heroku master
 
 ### add heroku git repo
-heroku git:remote -a financefb-api
+heroku git:remote -a freddybarrios-api

@@ -27,14 +27,14 @@ class Post extends React.Component {
   }
 
   render() {
-    const { title, body_markdown } = this.props.post || {};
+    const { title, content } = this.props.post || {};
     const { loading } = this.state;
     return loading ? (
       <h1 className="post__loading">Loading...</h1>
     ) : (
       <section className="post">
         <h1 className="post__title">{title}</h1>
-        <ReactMarkdown plugins={[gfm]} children={body_markdown}></ReactMarkdown>
+        <ReactMarkdown plugins={[gfm]} children={content}></ReactMarkdown>
       </section>
     );
   }

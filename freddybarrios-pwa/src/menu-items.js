@@ -20,6 +20,13 @@ export default {
                     url: '/app/loans',
                     icon: 'feather icon-box',
                 },
+                {
+                    id: 'posts',
+                    title: 'Posts',
+                    type: 'item',
+                    url: '/app/posts',
+                    icon: 'feather icon-box',
+                },
             ]
         }/* ,
         {

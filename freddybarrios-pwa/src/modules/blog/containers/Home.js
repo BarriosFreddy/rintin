@@ -15,7 +15,7 @@ class Home extends React.Component {
     return (
       <section className="home">
         {!posts && <h1>LOADING...</h1>}
-        {posts && posts.map(post => <ListItem key={post.id} {...post} link={`${match.path}post/${post.id}`} />)}
+        {posts && posts.map(post => <ListItem key={post._id} {...post} link={`${match.path}post/${post._id}`} />)}
       </section>
     );
   }

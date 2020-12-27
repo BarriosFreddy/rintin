@@ -27,6 +27,10 @@ export const UPDATE_LOAN_START = "UPDATE_LOAN_START";
 export const UPDATE_LOAN_SUCCESS = "UPDATE_LOAN_SUCCESS";
 export const UPDATE_LOAN_FAILURE = "UPDATE_LOAN_FAILURE";
 
+const headers = {
+  Authorization: "Basic dXNlcm5hbWU6cGFzc3dvcmQ="
+}
+
 export const findAllLoan = ({ active, page = 0, size = 10 } = {}) => {
   return async (dispatch) => {
     try {
@@ -265,15 +269,11 @@ export const findAllPosts = ({ page = 0, size = 10 } = {}) => {
   return async (dispatch) => {
     try {
       dispatch(findPostsStart());
-      const username = config.api.usernameDevTo
-      let url = `${config.api.baseDevTo}${config.api.articles.findAll}`;
+      let url = `${config.api.base}${config.api.posts.findAll}`;
       const { data } = await axios({
         url,
         method: "GET",
-        params: {
-          username,
-          page
-        },
+        headers,
         withCredentials: false
       });
       dispatch(findAllPostsSuccess(data));
@@ -288,10 +288,11 @@ export const findPostById = (id) => {
   return async (dispatch) => {
     try {
       dispatch(findPostByIdStart());
-      let url = `${config.api.baseDevTo}${config.api.articles.findPostById}${id}`;
+      let url = `${config.api.base}${config.api.posts.findPostById}${id}`;
       const { data } = await axios({
         url,
         method: "GET",
+        headers,
         withCredentials: false
       });
       dispatch(findPostByIdSuccess(data));
