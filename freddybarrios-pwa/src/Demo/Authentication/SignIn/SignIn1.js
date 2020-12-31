@@ -56,7 +56,6 @@ class SignUp1 extends React.Component {
   }
 
   handleKeyPress(event) {
-    console.log("Pressed", event.key );
     if (event.key === "Enter") 
       this.login()  
   }

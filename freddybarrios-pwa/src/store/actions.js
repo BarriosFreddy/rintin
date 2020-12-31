@@ -3,6 +3,8 @@ import config from "../config";
 import constants from "./constant";
 import utils from "../utils";
 
+const isDev = config.api.env === "DEV";
+
 export const COLLAPSE_MENU = "COLLAPSE_MENU";
 export const COLLAPSE_TOGGLE = "COLLAPSE_TOGGLE";
 export const FULL_SCREEN = "FULL_SCREEN";
@@ -28,19 +30,29 @@ export const UPDATE_LOAN_SUCCESS = "UPDATE_LOAN_SUCCESS";
 export const UPDATE_LOAN_FAILURE = "UPDATE_LOAN_FAILURE";
 
 const headers = {
-  Authorization: "Basic dXNlcm5hbWU6cGFzc3dvcmQ="
-}
+  Authorization: "Basic dXNlcm5hbWU6cGFzc3dvcmQ=",
+};
+
+const headersDEV = {
+  Authorization: `Bearer ${utils.getToken()}`,
+};
 
 export const findAllLoan = ({ active, page = 0, size = 10 } = {}) => {
   return async (dispatch) => {
     try {
       dispatch(findLoansStart());
       let url = `${config.api.base}${config.api.loans.findAll}?page=${page}&size=${size}`;
-      if(active || active === false) url += `&active=${active}` 
-      const { data } = await axios({
+      if (active || active === false) url += `&active=${active}`;
+
+      const request = {
         url,
         method: "GET",
-      });
+      };
+
+      if (isDev) request.headers = headersDEV;
+
+      const { data } = await axios(request);
+
       dispatch(findAllLoansSuccess(data));
     } catch (error) {
       dispatch(findLoansFailure(error));
@@ -52,10 +64,12 @@ export const findByIdLoan = (id) => {
   return async (dispatch) => {
     try {
       dispatch(findLoansStart());
-      const { data } = await axios({
+      const request = {
         url: `${config.api.base}${config.api.loans.findById}${id}`,
         method: "GET",
-      });
+      }
+      if (isDev) request.headers = headersDEV;
+      const { data } = await axios(request);
       dispatch(findByIdLoanSuccess(data));
     } catch (error) {
       dispatch(findLoansFailure(error));
@@ -105,16 +119,15 @@ export const saveLoan = (loan) => {
   return async (dispatch) => {
     try {
       dispatch(saveLoanStart());
-      await axios({
+      const request = {
         url: `${config.api.base}${config.api.loans.save}`,
         method: "POST",
         data: {
           ...loan,
-        },
-        headers: {
-          Authorization: `Bearer ${utils.getToken()}`
         }
-      });
+      }
+      if (isDev) request.headers = headersDEV;
+      await axios(request);
       dispatch(saveLoanSuccess());
     } catch (error) {
       dispatch(saveLoanFailure(error));
@@ -148,13 +161,15 @@ export const updateLoan = (id, loan) => {
   return async (dispatch) => {
     try {
       dispatch(updateLoanStart());
-      await axios({
+      const request =  {
         url: `${config.api.base}${config.api.loans.update}${id}`,
         method: "PUT",
         data: {
           ...loan,
         },
-      });
+      }
+      if (isDev) request.headers = headersDEV;
+      await axios(request);
       dispatch(updateLoanSuccess());
     } catch (error) {
       dispatch(updateLoanFailure(error));
@@ -188,10 +203,12 @@ export const closeLoan = (id) => {
   return async (dispatch) => {
     try {
       dispatch(updateLoanStart());
-      await axios({
-        url: `${config.api.base}${config.api.loans.close.replace(':id', id)}`,
-        method: 'GET', 
-      });
+      const request = {
+        url: `${config.api.base}${config.api.loans.close.replace(":id", id)}`,
+        method: "GET",
+      }
+      if (isDev) request.headers = headersDEV;
+      await axios(request);
       dispatch(updateLoanSuccess());
     } catch (error) {
       dispatch(updateLoanFailure(error));
@@ -283,7 +300,6 @@ export const findAllPosts = ({ page = 0, size = 10 } = {}) => {
   };
 };
 
-
 export const findPostById = (id) => {
   return async (dispatch) => {
     try {
@@ -293,7 +309,7 @@ export const findPostById = (id) => {
         url,
         method: "GET",
         headers,
-        withCredentials: false
+        withCredentials: false,
       });
       dispatch(findPostByIdSuccess(data));
     } catch (error) {
@@ -301,7 +317,6 @@ export const findPostById = (id) => {
     }
   };
 };
-
 
 export const findPostsStart = () => ({
   type: POST_TYPE,
@@ -353,16 +368,15 @@ export const savePost = (post) => {
   return async (dispatch) => {
     try {
       dispatch(savePostStart());
-      await axios({
+      const request = {
         url: `${config.api.base}${config.api.posts.save}`,
         method: "POST",
         data: {
           ...post,
-        },
-        headers: {
-          Authorization: `Bearer ${utils.getToken()}`
         }
-      });
+      } 
+      if (isDev) request.headers = headersDEV;
+      await axios(request);
       dispatch(savePostSuccess());
     } catch (error) {
       dispatch(savePostFailure(error));
@@ -396,13 +410,15 @@ export const updatePost = (id, post) => {
   return async (dispatch) => {
     try {
       dispatch(updatePostStart());
-      await axios({
+      const request = {
         url: `${config.api.base}${config.api.posts.update}${id}`,
         method: "PUT",
         data: {
           ...post,
         },
-      });
+      }
+      if (isDev) request.headers = headersDEV;
+      await axios(request);
       dispatch(updatePostSuccess());
     } catch (error) {
       dispatch(updatePostFailure(error));
