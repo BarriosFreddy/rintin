@@ -11,6 +11,7 @@ class SignUp1 extends React.Component {
     super();
     this.login = this.login.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
     this.state = {
       username: "",
       password: "",
@@ -21,6 +22,7 @@ class SignUp1 extends React.Component {
     if (prevProps.authenticating && !authenticating && loggedIn) {
       this.props.history.push("/app/dashboard");
     } else if (!authenticating && !loggedIn) {
+      
     }
   }
 
@@ -51,6 +53,12 @@ class SignUp1 extends React.Component {
       [name]: value,
     });
     event.preventDefault();
+  }
+
+  handleKeyPress(event) {
+    console.log("Pressed", event.key );
+    if (event.key === "Enter") 
+      this.login()  
   }
 
   render() {
@@ -92,6 +100,7 @@ class SignUp1 extends React.Component {
                     className="form-control"
                     placeholder="password"
                     onChange={this.handleChange}
+                    onKeyPress={this.handleKeyPress}
                     disabled={authenticating}
                   />
                 </div>

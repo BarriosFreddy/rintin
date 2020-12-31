@@ -1,20 +1,22 @@
 import React from "react";
 import { connect } from "react-redux";
 import {
-  findAllLoan,
-  saveLoan,
-  updateLoan,
-  loanSelected,
+  findAllPosts,
+  savePost,
+  updatePost,
+  postSelected,
   findByIdLoan,
 } from "../../../store/actions";
 import PostsForm from "./PostsForm";
 import PostsTable from "./PostsTable";
 import { Button, Card } from "react-bootstrap";
+import ReactMarkdown from "react-markdown";
+import gfm from "remark-gfm";
 const Action = {
   EDIT: "E",
+  SHOW: "S",
   CREATE: "C",
   INITIAL: "I",
-  FEE: "F",
 };
 
 class Posts extends React.Component {
@@ -25,7 +27,6 @@ class Posts extends React.Component {
     this.handleShow = this.handleShow.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
     this.handleBackEdit = this.handleBackEdit.bind(this);
-    this.handleBackFee = this.handleBackFee.bind(this);
     this.handleLoadMore = this.handleLoadMore.bind(this);
     this.findAll = this.findAll.bind(this);
 
@@ -56,6 +57,7 @@ class Posts extends React.Component {
 
   handleSave(record) {
     const { action } = this.state;
+    console.log({ action });
     switch (action) {
       case Action.CREATE:
         record.createdAt = new Date().getTime();
@@ -74,28 +76,21 @@ class Posts extends React.Component {
   }
 
   handleShow(record) {
-    this.props.loanSelected(record);
-    this.setState({ action: Action.FEE });
+    this.props.postSelected(record);
+    this.setState({ action: Action.SHOW });
   }
 
-  handleEdit(record) {
-    this.props.loanSelected(record);
+  handleEdit() {
     this.setState({ action: Action.EDIT });
   }
 
   handleAdd() {
-    this.props.loanSelected(null);
+    this.props.postSelected(null);
     this.setState({ action: Action.CREATE });
-  }
-
-  handleBackFee() {
-    this.props.loanSelected(null);
-    this.findAll();
-    this.setState({ action: Action.INITIAL });
   }
   
   handleBackEdit() {
-    this.setState({ action: Action.FEE });
+    this.setState({ action: Action.INITIAL });
   }
 
   handleLoadMore(pageRequest) {
@@ -111,32 +106,25 @@ class Posts extends React.Component {
     return (
       <Card>
         <Card.Header>
-          <Card.Title as="h5">Loans</Card.Title>
+          <Card.Title as="h5">Posts</Card.Title>
           {action === Action.INITIAL && (
             <Button variant="success" size="sm" onClick={this.handleAdd}>
               Add
             </Button>
           )}
-          {action === Action.FEE && (
-            <>
-              <h6>{post.debtor}  </h6>
-              <Button
-                variant="primary"
-                size="sm"
-                onClick={() => this.handleEdit(post)}
-              >
-                Edit
-              </Button>
-            </>
+          {action === Action.SHOW && (
+            <Button variant="info" size="sm" onClick={this.handleEdit}>
+              Edit
+            </Button>
           )}
-           <Button
+           {action !== Action.INITIAL && <Button
               className="pull-right"
               variant="info"
               size="sm"
-              onClick={this.handleBackFee}
+              onClick={this.handleBackEdit}
             >
               Back
-            </Button>
+            </Button>}
         </Card.Header>
         <Card.Body>
           {action === Action.INITIAL && (
@@ -148,6 +136,9 @@ class Posts extends React.Component {
               onLoadMore={this.handleLoadMore}
             />
           )}
+          {action === Action.SHOW &&
+              <ReactMarkdown plugins={[gfm]} children={post.content}></ReactMarkdown>
+          }
           {[Action.CREATE, Action.EDIT].includes(action) && (
             <PostsForm
               post={post}
@@ -175,11 +166,10 @@ const maptStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  findAll: (pageSize) => dispatch(findAllLoan(pageSize)),
-  save: (loan) => dispatch(saveLoan(loan)),
-  update: (id, loan) => dispatch(updateLoan(id, loan)),
-  loanSelected: (loan) => dispatch(loanSelected(loan)),
-  findByIdLoan: (id) => dispatch(findByIdLoan(id)),
+  findAll: (pageSize) => dispatch(findAllPosts(pageSize)),
+  save: (post) => dispatch(savePost(post)),
+  update: (id, post) => dispatch(updatePost(id, post)),
+  postSelected: (post) => dispatch(postSelected(post)),
 });
 
 export default connect(maptStateToProps, mapDispatchToProps)(Posts);

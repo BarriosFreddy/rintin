@@ -47,6 +47,9 @@ export default {
         posts: {
             findAll: '/posts',
             findPostById:'/posts/',
+            save: '/posts',
+            update: '/posts/',
+
         },
         articles: {
             findAll: '/articles',

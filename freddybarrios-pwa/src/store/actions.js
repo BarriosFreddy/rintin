@@ -341,3 +341,93 @@ export const findPostsFailure = (error) => ({
     error,
   },
 });
+
+export const postSelected = (post) => ({
+  type: POST_TYPE,
+  payload: {
+    post,
+  },
+});
+
+export const savePost = (post) => {
+  return async (dispatch) => {
+    try {
+      dispatch(savePostStart());
+      await axios({
+        url: `${config.api.base}${config.api.posts.save}`,
+        method: "POST",
+        data: {
+          ...post,
+        },
+        headers: {
+          Authorization: `Bearer ${utils.getToken()}`
+        }
+      });
+      dispatch(savePostSuccess());
+    } catch (error) {
+      dispatch(savePostFailure(error));
+    }
+  };
+};
+
+export const savePostStart = () => ({
+  type: POST_TYPE,
+  payload: {
+    saving: true,
+  },
+});
+
+export const savePostSuccess = () => ({
+  type: POST_TYPE,
+  payload: {
+    saving: false,
+  },
+});
+
+export const savePostFailure = (error) => ({
+  type: POST_TYPE,
+  payload: {
+    saving: false,
+    error,
+  },
+});
+
+export const updatePost = (id, post) => {
+  return async (dispatch) => {
+    try {
+      dispatch(updatePostStart());
+      await axios({
+        url: `${config.api.base}${config.api.posts.update}${id}`,
+        method: "PUT",
+        data: {
+          ...post,
+        },
+      });
+      dispatch(updatePostSuccess());
+    } catch (error) {
+      dispatch(updatePostFailure(error));
+    }
+  };
+};
+
+export const updatePostStart = () => ({
+  type: POST_TYPE,
+  payload: {
+    updating: true,
+  },
+});
+
+export const updatePostSuccess = () => ({
+  type: POST_TYPE,
+  payload: {
+    updating: false,
+  },
+});
+
+export const updatePostFailure = (error) => ({
+  type: POST_TYPE,
+  payload: {
+    updating: false,
+    error,
+  },
+});
