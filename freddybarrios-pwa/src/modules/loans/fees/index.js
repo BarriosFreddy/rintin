@@ -130,7 +130,7 @@ class Fees extends React.Component {
               />
             )}
             {[Action.CREATE, Action.EDIT].includes(action) && (
-              <FeesForm fee={fee} onSave={this.handleSave} onCancel={this.handleCancel} showUpdatedMessage={showUpdatedMessage} />
+              <FeesForm fee={fee} feeDefault={loan.feeDefault} onSave={this.handleSave} onCancel={this.handleCancel} showUpdatedMessage={showUpdatedMessage} />
             )}
           </Card.Body>
         </Card>

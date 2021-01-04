@@ -9,6 +9,7 @@ class FeesForm extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
     const fee = props.fee || new Fee();
+    fee.amount = props.fee ? fee.amount : props.feeDefault
     this.state = {
       fee,
     };

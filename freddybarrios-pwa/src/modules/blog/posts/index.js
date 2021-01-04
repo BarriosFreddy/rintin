@@ -5,7 +5,6 @@ import {
   savePost,
   updatePost,
   postSelected,
-  findByIdLoan,
 } from "../../../store/actions";
 import PostsForm from "./PostsForm";
 import PostsTable from "./PostsTable";
