@@ -6,7 +6,7 @@ const descriptionSchema = joi.string().max(200);
 const codeSchema = joi.string().max(10);
 const contentSchema = joi.string();
 const tagsSchema = joi.array().items(joi.string());
-const publishSchema = joi.boolean();
+const publishedAtSchema = joi.date();
 const createdAtSchema = joi.date();
 const updatedAtSchema = joi.date();
 
@@ -20,7 +20,7 @@ const postCreateSchema = joi.object().keys({
   description: descriptionSchema.required(),
   content: contentSchema.required(),
   tags: tagsSchema.optional(),
-  publish: publishSchema.required(),
+  publishedAt: publishedAtSchema.optional(),
   createdAt: createdAtSchema.required(),
   updatedAt: updatedAtSchema.optional(),
 });
@@ -31,7 +31,7 @@ const postUpdateSchema = joi.object().keys({
   description: descriptionSchema,
   content: contentSchema,
   tags: tagsSchema,
-  publish: publishSchema,
+  publishedAt: publishedAtSchema,
   createdAt: createdAtSchema,
   updatedAt: updatedAtSchema,
 });

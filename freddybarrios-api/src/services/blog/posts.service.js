@@ -6,7 +6,6 @@ class PostsService {
   constructor() {}
 
   save(post) {
-    post.public = true;
     post.createdAt = new Date().getTime();
     return mongodbLib.save(COLLECTION, post);
   }

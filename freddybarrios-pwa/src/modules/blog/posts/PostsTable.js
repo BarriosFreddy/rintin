@@ -4,7 +4,7 @@ import { Table, Button } from "react-bootstrap";
 import moment from "moment";
 import contants from "../../../constants";
 
-const { DATE_FORMAT } = contants;
+const { DATE_FORMAT_SHORT } = contants;
 
 class PostsTable extends React.Component {
   constructor(props) {
@@ -48,6 +48,7 @@ class PostsTable extends React.Component {
           <tr>
             <th>Title</th>
             <th>Created at</th>
+            <th>Published at</th>
           </tr>
         </thead>
         <tbody>
@@ -58,7 +59,8 @@ class PostsTable extends React.Component {
               onClick={() => this.handleShow(record)}
             >
               <td>{record.title}</td>
-              <td>{moment(record.createdAt).format(DATE_FORMAT)}</td>
+              <td>{moment(record.createdAt).format(DATE_FORMAT_SHORT)}</td>
+              <td>{record.publishedAt ? moment(record.publishedAt).format(DATE_FORMAT_SHORT) : ""}</td>
             </tr>
           ))}
           <tr>

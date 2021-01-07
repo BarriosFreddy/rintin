@@ -24,6 +24,7 @@ class Posts extends React.Component {
     this.handleAdd = this.handleAdd.bind(this);
     this.handleSave = this.handleSave.bind(this);
     this.handleShow = this.handleShow.bind(this);
+    this.handlePublish = this.handlePublish.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
     this.handleBackEdit = this.handleBackEdit.bind(this);
     this.handleLoadMore = this.handleLoadMore.bind(this);
@@ -51,7 +52,7 @@ class Posts extends React.Component {
   }
 
   findAll() {
-    this.props.findAll({ active: true });
+    this.props.findAll();
   }
 
   handleSave(record) {
@@ -59,12 +60,12 @@ class Posts extends React.Component {
     console.log({ action });
     switch (action) {
       case Action.CREATE:
-        record.createdAt = new Date().getTime();
+        record.description = record.content.substring(0, 100) + "...";
         this.props.save(record);
         break;
       case Action.EDIT:
         const { _id: id } = record;
-        record.updatedAt = new Date().getTime();
+        record.description = record.content.substring(0, 100) + "...";
         delete record._id;
         this.props.update(id, record);
         record._id = id;
@@ -72,6 +73,11 @@ class Posts extends React.Component {
       default:
         break;
     }
+  }
+
+  handlePublish(record) {
+    console.log(record);
+    this.handleSave(record);
   }
 
   handleShow(record) {
@@ -135,14 +141,18 @@ class Posts extends React.Component {
               onLoadMore={this.handleLoadMore}
             />
           )}
-          {action === Action.SHOW &&
-              <ReactMarkdown plugins={[gfm]} children={post.content}></ReactMarkdown>
+          {action === Action.SHOW && 
+              <div>
+                <h2>{post.title}</h2>
+                <ReactMarkdown plugins={[gfm]} children={post.content}></ReactMarkdown>
+              </div>
           }
           {[Action.CREATE, Action.EDIT].includes(action) && (
             <PostsForm
               post={post}
               loading={saving || updating}
               onSave={this.handleSave}
+              onPublish={this.handlePublish}
               onCancel={this.handleBackEdit}
               showUpdatedMessage={showUpdatedMessage}
             />

@@ -15,12 +15,12 @@ async function save(req, res, next) {
 async function findAll(req, res, next) {
   let { size = 10, page = 0, publish } = req.query;
   let query;
-  if (publish) {
-    publish = publish === "true" || false;
+  if (publish === "true") {
     query = {
-      publish,
+      publish: { "$ne" : null},
     };
   }
+
   try {
     const {
       headers: { authorization },

@@ -282,12 +282,12 @@ export const logout = () => {
   };
 };
 
-export const findAllPosts = ({ publish = true, page = 0, size = 10 } = {}) => {
+export const findAllPosts = ({ publish = false, page = 0, size = 10 } = {}) => {
   return async (dispatch) => {
     try {
       dispatch(findPostsStart());
       let url = `${config.api.base}${config.api.posts.findAll}?page=${page}&size=${size}`;
-      if (publish || publish === false) url += `&publish=${publish}`;
+      if (publish) url += `&publish=${publish}`;
 
       const { data } = await axios({
         url,

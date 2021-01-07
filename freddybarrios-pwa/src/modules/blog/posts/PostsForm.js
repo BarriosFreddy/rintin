@@ -6,6 +6,7 @@ class PostsForm extends React.Component {
   constructor(props) {
     super(props);
     this.handleSave = this.handleSave.bind(this);
+    this.handleSavePublish = this.handleSavePublish.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
 
@@ -17,8 +18,16 @@ class PostsForm extends React.Component {
 
   handleSave() {
     if (this.validateForm()) {
-      console.log(this.state.post);
       this.props.onSave(this.state.post);
+    } else {
+      console.log("invalid form");
+    }
+  }
+
+  handleSavePublish() {
+    if (this.validateForm()) {
+      this.state.post.publishedAt = new Date().getTime()
+      this.props.onPublish(this.state.post);
     } else {
       console.log("invalid form");
     }
@@ -77,15 +86,24 @@ class PostsForm extends React.Component {
           Record Updated
         </Alert>
         <Button
-          variant="success"
+          variant="info"
           type="button"
           size="sm"
           disabled={loading}
           onClick={this.handleSave}
         >
-          SAVE
+          DRAFT
         </Button>
-        <Button type="button" size="sm" onClick={this.handleCancel}>
+        <Button
+          variant="success"
+          type="button"
+          size="sm"
+          disabled={loading}
+          onClick={this.handleSavePublish}
+        >
+          SAVE AND PUBLISH
+        </Button>
+        <Button className="pull-right" type="button" size="sm" onClick={this.handleCancel}>
           CANCEL
         </Button>
       </Form>
