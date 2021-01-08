@@ -1,28 +1,44 @@
 const mongodbLib = require("../../libs/mongodbLib");
+const cache = require("../../helpers/cache")
 
 const COLLECTION = "posts";
 
-class PostsService {
-  constructor() {}
+function PostsService() {
 
-  save(post) {
+  function save(post) {
     post.createdAt = new Date().getTime();
     return mongodbLib.save(COLLECTION, post);
   }
 
-  update(id, post) {
+  function update(id, post) {
     post.updatedAt = new Date().getTime();
     return mongodbLib.update(COLLECTION, id, post);
   }
 
-  findAll(query, pageRequest) {
-    return mongodbLib.getAll(COLLECTION, { ...query, orderBy: { createdAt : -1 }}, pageRequest);
+  function findAll(query, pageRequest) {
+    return cacheSystem(`findAllPosts${pageRequest.size}${pageRequest.page}`, { ...query, orderBy: { createdAt : -1 }, pageRequest})
   }
 
-  findById(id) {
+  function findById(id) {
     return mongodbLib.get(COLLECTION, id);
   }
 
+  async function cacheSystem(queryKey, query) {
+    let result = await cache.get(queryKey)
+    if (!result) {
+      const {pageRequest, ...queryFields} = query
+      result = mongodbLib.getAll(COLLECTION, queryFields, pageRequest);
+      await cache.set(queryKey, result)
+    }
+    return result;
+  }
+
+  return {
+    save,
+    update,
+    findAll,
+    findById
+  }
 }
 
 module.exports = new PostsService();

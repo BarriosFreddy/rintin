@@ -1,5 +1,5 @@
 {
-  "name": "finance",
+  "name": "freddybarrios",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -24,6 +24,7 @@
     "joi": "^17.2.0",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.6.0",
+    "node-cache": "^5.1.2",
     "passport": "^0.4.1",
     "passport-http": "^0.3.0",
     "passport-jwt": "^4.0.0",
