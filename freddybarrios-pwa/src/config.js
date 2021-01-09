@@ -23,9 +23,9 @@ export default {
     layout6Background : 'linear-gradient(to right, #A445B2 0%, #D41872 52%, #FF0066 100%)', // used only for pre-layout = layout-6
     layout6BackSize : '', // used only for pre-layout = layout-6
     api: {
-        env: 'DEV',
-        //base: 'https://freddybarrios.herokuapp.com',
-        base: 'http://localhost:3001',
+        env: 'PROD',
+        base: 'https://freddybarrios.herokuapp.com',
+        //base: 'http://localhost:3001',
         baseDevTo: 'https://dev.to/api',
         apiToken: 'dXNlcm5hbWU6cGFzc3dvcmQ=',
         apiTokenDevTo: '83X57Fn2vJFrLrSpknKaYB1q',

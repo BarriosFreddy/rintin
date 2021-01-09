@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const { AUTH } = require("../../../constants").RESOURCES;
 const { AUTH_JWT_SECRET, ENV = "dev" } = process.env;
 
-const isProd = ENV === "prod";
+const isProd = ENV === "PROD";
 
 const JWT_COOKIE_NAME = "jwt";
 const authRouter = () => {
