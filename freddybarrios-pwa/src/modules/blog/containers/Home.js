@@ -7,7 +7,7 @@ import ListItem from "../components/ListItem";
 class Home extends React.Component {
 
   componentDidMount() {
-    this.props.findAll()
+    this.props.findAll({ published: true})
   }
 
   render() {

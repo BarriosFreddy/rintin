@@ -13,11 +13,11 @@ async function save(req, res, next) {
 }
 
 async function findAll(req, res, next) {
-  let { size = 10, page = 0, publish } = req.query;
+  let { size = 10, page = 0, published } = req.query;
   let query;
-  if (publish === "true") {
+  if (published === "true") {
     query = {
-      publish: { "$ne" : null},
+      publishedAt: { "$ne" : null},
     };
   }
 
