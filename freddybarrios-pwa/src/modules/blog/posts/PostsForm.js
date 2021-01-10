@@ -26,8 +26,8 @@ class PostsForm extends React.Component {
 
   handleSavePublish() {
     if (this.validateForm()) {
-      this.state.post.publishedAt = new Date().getTime()
-      this.props.onPublish(this.state.post);
+      const post = {...this.state.post, publishedAt : new Date().getTime()}
+      this.props.onPublish(post);
     } else {
       console.log("invalid form");
     }
