@@ -20,7 +20,7 @@ const postCreateSchema = joi.object().keys({
   description: descriptionSchema.required(),
   content: contentSchema.required(),
   tags: tagsSchema.optional(),
-  publishedAt: publishedAtSchema.optional(),
+  publishedAt: publishedAtSchema.allow(null),
   createdAt: createdAtSchema.optional(),
   updatedAt: updatedAtSchema.optional(),
 });
@@ -31,7 +31,7 @@ const postUpdateSchema = joi.object().keys({
   description: descriptionSchema,
   content: contentSchema,
   tags: tagsSchema,
-  publishedAt: publishedAtSchema,
+  publishedAt: publishedAtSchema.allow(null),
   createdAt: createdAtSchema,
   updatedAt: updatedAtSchema,
 });
