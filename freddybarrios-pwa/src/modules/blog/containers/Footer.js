@@ -6,7 +6,7 @@ const Footer = () => (
   <footer className="footer">
     <div className="footer__legend">
       <p>© Copyright 2020, Freddy Barrios</p>
-      <Link to='/auth/signin'>Sing in</Link>
+      <Link to='/auth/signin'>Sign in</Link>
     </div>
   </footer>
 );
