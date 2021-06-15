@@ -36,7 +36,7 @@ const postsRouter = () => {
 
   router.get(FIND_ALL, findAll);
 
-  router.get(FIND_BY_ID, validationHandler(postIdSchema, "params"), findById);
+  router.get(FIND_BY_ID, findById);
 
   return router;
 };

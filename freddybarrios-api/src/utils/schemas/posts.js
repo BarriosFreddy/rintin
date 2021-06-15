@@ -9,6 +9,7 @@ const tagsSchema = joi.array().items(joi.string());
 const publishedAtSchema = joi.date();
 const createdAtSchema = joi.date();
 const updatedAtSchema = joi.date();
+const readableURLSchema = joi.string();
 
 const postIdSchema = joi.object().keys({
   id: idSchema.required(),
@@ -20,6 +21,7 @@ const postCreateSchema = joi.object().keys({
   description: descriptionSchema.required(),
   content: contentSchema.required(),
   tags: tagsSchema.optional(),
+  readableURL: readableURLSchema.optional(), 
   publishedAt: publishedAtSchema.allow(null),
   createdAt: createdAtSchema.optional(),
   updatedAt: updatedAtSchema.optional(),
@@ -31,6 +33,7 @@ const postUpdateSchema = joi.object().keys({
   description: descriptionSchema,
   content: contentSchema,
   tags: tagsSchema,
+  readableURL: readableURLSchema,
   publishedAt: publishedAtSchema.allow(null),
   createdAt: createdAtSchema,
   updatedAt: updatedAtSchema,

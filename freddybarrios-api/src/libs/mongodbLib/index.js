@@ -25,15 +25,15 @@ class MongodbLib {
   }
 
   async getAll(collection, queryFields = {}, { size, page } = {}) {
-    let orderBy
+    let orderBy;
     if (queryFields && queryFields.orderBy) {
-      orderBy = queryFields.orderBy
-      delete queryFields.orderBy
+      orderBy = queryFields.orderBy;
+      delete queryFields.orderBy;
     }
     let query = this.database.collection(collection).find(queryFields);
     if (size) query = query.limit(Number(size));
     if (size && page) query = query.skip(Number(size) * Number(page));
-    if (orderBy) query = query.sort(orderBy)
+    if (orderBy) query = query.sort(orderBy);
     return await query.toArray();
   }
 
@@ -41,6 +41,10 @@ class MongodbLib {
     return await this.database
       .collection(collection)
       .findOne({ _id: ObjectId(id) });
+  }
+
+  async findOne(collection, query = {}) {
+    return await this.database.collection(collection).findOne(query);
   }
 
   async save(collection, data) {

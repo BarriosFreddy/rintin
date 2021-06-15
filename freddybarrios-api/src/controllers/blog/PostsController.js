@@ -58,7 +58,7 @@ async function findById(req, res, next) {
     const token = authorization ? authorization.split(" ").pop() : null;
     if (authorization && token && token === API_TOKEN) {
       const { id } = req.params;
-      const trips = await postsService.findById(id);
+      const trips = await postsService.findByReadableURL(id);
       res.status(200).send(trips);
     } else {
       res.status(401).send(null);
